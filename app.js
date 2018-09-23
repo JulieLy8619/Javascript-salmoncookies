@@ -45,6 +45,23 @@ for (var i = 0; i< 14; i++) {
   //console.log('store total (after adding new total): ' + firstAndPikeCookiesPurchTotal);
 }
 
+//get it to write to the html
+var liItem = document.getElementsByClassName('timeList');
+for (var j=0; j < firstAndPikeCookiesPurchArray.length; j++) {
+  //console.log('i made it into j for loop');
+  if ((j+6) > 12) {
+    //console.log('i made it in AM if loop');
+    liItem[j].item = (j+6) + 'am: ' + firstAndPikeCookiesPurchArray[j] + ' cookies'
+    console.log(liItem[j].item);
+  } else {
+    //console.log('I made it into the PM if loop');
+    liItem[j].item = (j+6-12) + 'pm: ' + firstAndPikeCookiesPurchArray[j] + ' cookies'
+    console.log(liItem[j].item);
+  }
+}
+
+//firstAndPikeCookiesPurchArray.appendChild(ulel);
+
 // var seatacAirportStore {
 //   minCust: 3,
 //   maxCust: 24,
