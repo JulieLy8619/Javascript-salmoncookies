@@ -29,7 +29,7 @@ var firstAndPikeCookiesPurchArray = [];
 var firstAndPikeCookiesPurchTotal = 0;
 for (var i = 0; i< 15; i++) {
   //calcs random cust number with the cookie ave
-  //how do I make it reset it's random
+  //need to work on fixing random so it is a method
   var firstAndPikeCookiesPurch = firstAndPikeStore.aveCookie * (getRandomInt(firstAndPikeStore.minCust, firstAndPikeStore.maxCust))
   //console.log('cokkie ave: ' + firstAndPikeStore.aveCookie);
   //console.log('rand cust: ' + firstAndPikeStore.randCustPerHr);
@@ -41,12 +41,12 @@ for (var i = 0; i< 15; i++) {
   //this is for the store total
   //console.log('store total (before adding new total): ' + firstAndPikeCookiesPurchTotal);
   firstAndPikeCookiesPurchTotal = firstAndPikeCookiesPurchTotal + firstAndPikeCookiesPurch;
-  console.log('array: ' + firstAndPikeCookiesPurchArray);
+  //console.log('array: ' + firstAndPikeCookiesPurchArray);
   //console.log('store total (after adding new total): ' + firstAndPikeCookiesPurchTotal);
 }
 
 //get it to write to the html
-var liItem = document.getElementsByClassName('timeList');
+var liItem = document.getElementsByClassName('firstAndPikeTimeList');
 for (var j=0; j < firstAndPikeCookiesPurchArray.length; j++) {
   //console.log('i made it into j for loop');
   if ((j+6) < 12) {
@@ -67,42 +67,174 @@ for (var j=0; j < firstAndPikeCookiesPurchArray.length; j++) {
 }
 
 //get total to write to page
-var liTotalItem = document.getElementById('totaloflist');
-console.log(liTotalItem);
+var liTotalItem = document.getElementById('firstAndPikeTotaloflist');
+//console.log(liTotalItem);
 liTotalItem.textContent = 'Total: ' + firstAndPikeCookiesPurchTotal + ' cookies';
-//console.log(liTotalItem.item);
-//iTotlalItem.innerText = liTotalItem.item;
-//console.log(iTotlalItem.firstChild.nodeValue);
 
-//firstAndPikeCookiesPurchArray.appendChild(ulel);
+//================================
+//================================
+var seatacAirportStore = {
+  minCust: 3,
+  maxCust: 24,
+  aveCookie: 1.2
+  //randCustPerHr: getRandomInt(this.minCust, this.maxCust)
+};
+//calc cookies per hour and put in array
+var seatacAirportCookiesPurchArray = [];
+var seatacAirportCookiesPurchTotal = 0;
+for (var i = 0; i< 15; i++) {
+  //calcs random cust number with the cookie ave
+  var seatacAirportCookiesPurch = seatacAirportStore.aveCookie * (getRandomInt(seatacAirportStore.minCust, seatacAirportStore.maxCust))
 
-// var seatacAirportStore {
-//   minCust: 3,
-//   maxCust: 24,
-//   aveCookie: 1.2
-//   randCustPerHr: getRandomInt(this.minCust, this.maxCust)
-// };
+  //this puts it into the store's array
+  seatacAirportCookiesPurchArray[i] = seatacAirportCookiesPurch;
+  
+  //this is for the store total
+  seatacAirportCookiesPurchTotal = seatacAirportCookiesPurchTotal + seatacAirportCookiesPurch;
+  //console.log('array: ' + seatacAirportCookiesPurchArray);
+}
 
-// var seattleCenterStore {
-//   minCust: 11,
-//   maxCust: 38,
-//   aveCookie: 3.7
-//   randCustPerHr: getRandomInt(this.minCust, this.maxCust)
+//get it to write to the html
+var liItem = document.getElementsByClassName('seaTacTimeList');
+for (var j=0; j < seatacAirportCookiesPurchArray.length; j++) {
+  if ((j+6) < 12) {
+    liItem[j].item = (j+6) + 'am: ' + seatacAirportCookiesPurchArray[j] + ' cookies'
+    liItem[j].firstChild.nodeValue = liItem[j].item;
+  } else if (j+6 === 12) {
+    liItem[j].item = (j+6) + 'pm: ' + seatacAirportCookiesPurchArray[j] + ' cookies'
+    liItem[j].firstChild.nodeValue = liItem[j].item;
+  } else {
+    liItem[j].item = (j+6-12) + 'pm: ' + seatacAirportCookiesPurchArray[j] + ' cookies'
+    liItem[j].firstChild.nodeValue = liItem[j].item;
+  }
+}
 
-// };
+//get total to write to page
+var liTotalItem = document.getElementById('seaTacTotaloflist');
+//console.log(liTotalItem);
+liTotalItem.textContent = 'Total: ' + seatacAirportCookiesPurchTotal + ' cookies';
 
-// var capitolHillStore {
-//   minCust: 20,
-//   maxCust: 38,
-//   aveCookie: 2.3
-//   randCustPerHr: getRandomInt(this.minCust, this.maxCust)
+//================================
+//================================
+var seattleCenterStore = {
+  minCust: 11,
+  maxCust: 38,
+  aveCookie: 3.7
+  //randCustPerHr: getRandomInt(this.minCust, this.maxCust)
+};
+//calc cookies per hour and put in array
+var seattleCenterCookiesPurchArray = [];
+var seattleCenterCookiesPurchTotal = 0;
+for (var i = 0; i< 15; i++) {
+  //calcs random cust number with the cookie ave
+  var seattleCenterCookiesPurch = seattleCenterStore.aveCookie * (getRandomInt(seattleCenterStore.minCust, seattleCenterStore.maxCust))
 
-// };
+  //this puts it into the store's array
+  seattleCenterCookiesPurchArray[i] = seattleCenterCookiesPurch;
+  
+  //this is for the store total
+  seattleCenterCookiesPurchTotal = seattleCenterCookiesPurchTotal + seattleCenterCookiesPurch;
+}
 
-// var alikStore {
-//   minCust: 2,
-//   maxCust: 16,
-//   aveCookie: 4.6
-//   randCustPerHr: getRandomInt(this.minCust, this.maxCust)
-// };
+//get it to write to the html
+var liItem = document.getElementsByClassName('seattleCenterTimeList');
+for (var j=0; j < seattleCenterCookiesPurchArray.length; j++) {
+  if ((j+6) < 12) {
+    liItem[j].item = (j+6) + 'am: ' + seattleCenterCookiesPurchArray[j] + ' cookies'
+    liItem[j].firstChild.nodeValue = liItem[j].item;
+  } else if (j+6 === 12) {
+    liItem[j].item = (j+6) + 'pm: ' + seattleCenterCookiesPurchArray[j] + ' cookies'
+    liItem[j].firstChild.nodeValue = liItem[j].item;
+  } else {
+    liItem[j].item = (j+6-12) + 'pm: ' + seattleCenterCookiesPurchArray[j] + ' cookies'
+    liItem[j].firstChild.nodeValue = liItem[j].item;
+  }
+}
+
+//get total to write to page
+var liTotalItem = document.getElementById('seattleCenterTotaloflist');
+liTotalItem.textContent = 'Total: ' + seattleCenterCookiesPurchTotal + ' cookies';
+
+//================================
+//================================
+var capitolHillStore = {
+  minCust: 20,
+  maxCust: 38,
+  aveCookie: 2.3
+  //randCustPerHr: getRandomInt(this.minCust, this.maxCust)
+};
+//calc cookies per hour and put in array
+var capitolHillCookiesPurchArray = [];
+var capitolHillCookiesPurchTotal = 0;
+for (var i = 0; i< 15; i++) {
+  //calcs random cust number with the cookie ave
+  var capitolHillCookiesPurch = capitolHillStore.aveCookie * (getRandomInt(capitolHillStore.minCust, capitolHillStore.maxCust))
+
+  //this puts it into the store's array
+  capitolHillCookiesPurchArray[i] = capitolHillCookiesPurch;
+  
+  //this is for the store total
+  capitolHillCookiesPurchTotal = capitolHillCookiesPurchTotal + capitolHillCookiesPurch;
+}
+
+//get it to write to the html
+var liItem = document.getElementsByClassName('capHillTimeList');
+for (var j=0; j < capitolHillCookiesPurchArray.length; j++) {
+  if ((j+6) < 12) {
+    liItem[j].item = (j+6) + 'am: ' + capitolHillCookiesPurchArray[j] + ' cookies'
+    liItem[j].firstChild.nodeValue = liItem[j].item;
+  } else if (j+6 === 12) {
+    liItem[j].item = (j+6) + 'pm: ' + capitolHillCookiesPurchArray[j] + ' cookies'
+    liItem[j].firstChild.nodeValue = liItem[j].item;
+  } else {
+    liItem[j].item = (j+6-12) + 'pm: ' + capitolHillCookiesPurchArray[j] + ' cookies'
+    liItem[j].firstChild.nodeValue = liItem[j].item;
+  }
+}
+
+//get total to write to page
+var liTotalItem = document.getElementById('capHillTotaloflist');
+liTotalItem.textContent = 'Total: ' + capitolHillCookiesPurchTotal + ' cookies';
+
+//================================
+//================================
+var alikStore = {
+  minCust: 2,
+  maxCust: 16,
+  aveCookie: 4.6
+  //randCustPerHr: getRandomInt(this.minCust, this.maxCust)
+};
+//calc cookies per hour and put in array
+var alikCookiesPurchArray = [];
+var alikCookiesPurchTotal = 0;
+for (var i = 0; i< 15; i++) {
+  //calcs random cust number with the cookie ave
+  var alikCookiesPurch = alikStore.aveCookie * (getRandomInt(alikStore.minCust, alikStore.maxCust))
+
+  //this puts it into the store's array
+  alikCookiesPurchArray[i] = alikCookiesPurch;
+  
+  //this is for the store total
+  alikCookiesPurchTotal = alikCookiesPurchTotal + alikCookiesPurch;
+}
+
+//get it to write to the html
+var liItem = document.getElementsByClassName('alkiTimeList');
+for (var j=0; j < alikCookiesPurchArray.length; j++) {
+  if ((j+6) < 12) {
+    liItem[j].item = (j+6) + 'am: ' + alikCookiesPurchArray[j] + ' cookies'
+    liItem[j].firstChild.nodeValue = liItem[j].item;
+  } else if (j+6 === 12) {
+    liItem[j].item = (j+6) + 'pm: ' + alikCookiesPurchArray[j] + ' cookies'
+    liItem[j].firstChild.nodeValue = liItem[j].item;
+  } else {
+    liItem[j].item = (j+6-12) + 'pm: ' + alikCookiesPurchArray[j] + ' cookies'
+    liItem[j].firstChild.nodeValue = liItem[j].item;
+  }
+}
+
+//get total to write to page
+var liTotalItem = document.getElementById('alkiTotaloflist');
+liTotalItem.textContent = 'Total: ' + alikCookiesPurchTotal + ' cookies';
+
 
