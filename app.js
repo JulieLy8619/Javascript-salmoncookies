@@ -66,6 +66,14 @@ for (var j=0; j < firstAndPikeCookiesPurchArray.length; j++) {
   }
 }
 
+//get total to write to page
+var liTotalItem = document.getElementById('totaloflist');
+console.log(liTotalItem);
+liTotalItem.textContent = 'Total: ' + firstAndPikeCookiesPurchTotal + ' cookies';
+//console.log(liTotalItem.item);
+//iTotlalItem.innerText = liTotalItem.item;
+//console.log(iTotlalItem.firstChild.nodeValue);
+
 //firstAndPikeCookiesPurchArray.appendChild(ulel);
 
 // var seatacAirportStore {
