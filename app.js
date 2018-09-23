@@ -27,7 +27,7 @@ var firstAndPikeStore = {
 //calc cookies per hour and put in array
 var firstAndPikeCookiesPurchArray = [];
 var firstAndPikeCookiesPurchTotal = 0;
-for (var i = 0; i< 14; i++) {
+for (var i = 0; i< 15; i++) {
   //calcs random cust number with the cookie ave
   //how do I make it reset it's random
   var firstAndPikeCookiesPurch = firstAndPikeStore.aveCookie * (getRandomInt(firstAndPikeStore.minCust, firstAndPikeStore.maxCust))
@@ -49,14 +49,20 @@ for (var i = 0; i< 14; i++) {
 var liItem = document.getElementsByClassName('timeList');
 for (var j=0; j < firstAndPikeCookiesPurchArray.length; j++) {
   //console.log('i made it into j for loop');
-  if ((j+6) > 12) {
+  if ((j+6) < 12) {
     //console.log('i made it in AM if loop');
     liItem[j].item = (j+6) + 'am: ' + firstAndPikeCookiesPurchArray[j] + ' cookies'
-    console.log(liItem[j].item);
+    //console.log(liItem[j].item);
+    liItem[j].firstChild.nodeValue = liItem[j].item;
+  } else if (j+6 === 12) {
+    liItem[j].item = (j+6) + 'pm: ' + firstAndPikeCookiesPurchArray[j] + ' cookies'
+    //console.log(liItem[j].item);
+    liItem[j].firstChild.nodeValue = liItem[j].item;
   } else {
     //console.log('I made it into the PM if loop');
     liItem[j].item = (j+6-12) + 'pm: ' + firstAndPikeCookiesPurchArray[j] + ' cookies'
-    console.log(liItem[j].item);
+    //console.log(liItem[j].item);
+    liItem[j].firstChild.nodeValue = liItem[j].item;
   }
 }
 
