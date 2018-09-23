@@ -15,48 +15,63 @@ notes and hints:
 */
 
 //array of cookies purch
-var storesCookiesPurchArray = [];
+var allStoresCookiesPurchArray = [];
 
-var firstAndPikeStore {
+var firstAndPikeStore = {
   minCust: 23,
   maxCust: 65,
-  aveCookie: 6.3,
-  randCustPerHr: getRandomInt(this.minCust, this.maxCust);
+  aveCookie: 6.3
+  //randCustPerHr: getRandomInt(23,65) 
 
-}
-//calc cookies per hour
-//how to plan for that after 12 it resets to 1
-for (var i = 6; i< 21)
-  var firstAndPikeCookiesPurch = firstAndPikeStore.aveCookie * firstAndPikeStore.randCustPerHr)
+};
+//calc cookies per hour and put in array
+var firstAndPikeCookiesPurchArray = [];
+var firstAndPikeCookiesPurchTotal = 0;
+for (var i = 0; i< 14; i++) {
+  //calcs random cust number with the cookie ave
+  //how do I make it reset it's random
+  var firstAndPikeCookiesPurch = firstAndPikeStore.aveCookie * (getRandomInt(firstAndPikeStore.minCust, firstAndPikeStore.maxCust))
+  //console.log('cokkie ave: ' + firstAndPikeStore.aveCookie);
+  //console.log('rand cust: ' + firstAndPikeStore.randCustPerHr);
+  //console.log('cookie ave per day: ' + firstAndPikeCookiesPurch);
 
-
-var seatacAirportStore {
-  minCust: 3,
-  maxCust: 24,
-  aveCookie: 1.2
-  randCustPerHr: getRandomInt(this.minCust, this.maxCust);
-}
-
-var seattleCenterStore {
-  minCust: 11,
-  maxCust: 38,
-  aveCookie: 3.7
-  randCustPerHr: getRandomInt(this.minCust, this.maxCust);
-
-}
-
-var capitolHillStore {
-  minCust: 20,
-  maxCust: 38,
-  aveCookie: 2.3
-  randCustPerHr: getRandomInt(this.minCust, this.maxCust);
-
+  //this puts it into the store's array
+  firstAndPikeCookiesPurchArray[i] = firstAndPikeCookiesPurch;
+  
+  //this is for the store total
+  //console.log('store total (before adding new total): ' + firstAndPikeCookiesPurchTotal);
+  firstAndPikeCookiesPurchTotal = firstAndPikeCookiesPurchTotal + firstAndPikeCookiesPurch;
+  console.log('array: ' + firstAndPikeCookiesPurchArray);
+  //console.log('store total (after adding new total): ' + firstAndPikeCookiesPurchTotal);
 }
 
-var alikStore {
-  minCust: 2,
-  maxCust: 16,
-  aveCookie: 4.6
-  randCustPerHr: getRandomInt(this.minCust, this.maxCust);
-}
+// var seatacAirportStore {
+//   minCust: 3,
+//   maxCust: 24,
+//   aveCookie: 1.2
+//   randCustPerHr: getRandomInt(this.minCust, this.maxCust)
+// };
+
+// var seattleCenterStore {
+//   minCust: 11,
+//   maxCust: 38,
+//   aveCookie: 3.7
+//   randCustPerHr: getRandomInt(this.minCust, this.maxCust)
+
+// };
+
+// var capitolHillStore {
+//   minCust: 20,
+//   maxCust: 38,
+//   aveCookie: 2.3
+//   randCustPerHr: getRandomInt(this.minCust, this.maxCust)
+
+// };
+
+// var alikStore {
+//   minCust: 2,
+//   maxCust: 16,
+//   aveCookie: 4.6
+//   randCustPerHr: getRandomInt(this.minCust, this.maxCust)
+// };
 
