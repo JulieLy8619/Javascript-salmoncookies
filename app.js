@@ -1,5 +1,11 @@
 'use strict';
 
+
+/*==================
+functions
+====================
+*/
+
 //random function taken from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random (which was given by Nicholas)
 function getRandomInt(min, max) {
   min = Math.ceil(min);
@@ -7,26 +13,81 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 }
 
-/*
-==================
-notes and hints:
--will need to use DOM for getting it to show lists on sales page
-==================
+/*==================
+Objects
+====================
 */
+var firstAndPikeStore = {
+  minCust: 23,
+  maxCust: 65,
+  aveCookie: 6.3,
+  randCustPerHr: getRandomInt(23, 65) 
+};
+
+var seatacAirportStore = {
+  minCust: 3,
+  maxCust: 24,
+  aveCookie: 1.2,
+  randCustPerHr: getRandomInt(3, 24)
+};
+
+var seattleCenterStore = {
+  minCust: 11,
+  maxCust: 38,
+  aveCookie: 3.7,
+  randCustPerHr: getRandomInt(11, 38)
+};
+
+var capitolHillStore = {
+  minCust: 20,
+  maxCust: 38,
+  aveCookie: 2.3,
+  randCustPerHr: getRandomInt(20, 38)
+};
+
+var alikStore = {
+  minCust: 2,
+  maxCust: 16,
+  aveCookie: 4.6,
+  randCustPerHr: getRandomInt(2, 16)
+};
+
+/*==================
+Global variables
+====================
+*/
+
 
 //array of cookies purch
 var allStoresCookiesPurchArray = [];
 
-var firstAndPikeStore = {
-  minCust: 23,
-  maxCust: 65,
-  aveCookie: 6.3
-  //randCustPerHr: getRandomInt(23,65) 
+//store variables: question for future julie: do I want/need to add these to their objects
 
-};
-//calc cookies per hour and put in array
 var firstAndPikeCookiesPurchArray = [];
 var firstAndPikeCookiesPurchTotal = 0;
+var seatacAirportCookiesPurchArray = [];
+var seatacAirportCookiesPurchTotal = 0;
+var seattleCenterCookiesPurchArray = [];
+var seattleCenterCookiesPurchTotal = 0;
+var capitolHillCookiesPurchArray = [];
+var capitolHillCookiesPurchTotal = 0;
+var alikCookiesPurchArray = [];
+var alikCookiesPurchTotal = 0;
+
+//array of stores for function
+var allStoresArray = [];
+
+//array of store's class IDs for DOM for function
+
+
+//array of store's ID;s for DON for function
+
+
+
+
+
+//calc cookies per hour and put in array
+
 for (var i = 0; i< 15; i++) {
   //calcs random cust number with the cookie ave
   //need to work on fixing random so it is a method
@@ -73,15 +134,9 @@ liTotalItem.textContent = 'Total: ' + firstAndPikeCookiesPurchTotal + ' cookies'
 
 //================================
 //================================
-var seatacAirportStore = {
-  minCust: 3,
-  maxCust: 24,
-  aveCookie: 1.2
-  //randCustPerHr: getRandomInt(this.minCust, this.maxCust)
-};
+
 //calc cookies per hour and put in array
-var seatacAirportCookiesPurchArray = [];
-var seatacAirportCookiesPurchTotal = 0;
+
 for (var i = 0; i< 15; i++) {
   //calcs random cust number with the cookie ave
   var seatacAirportCookiesPurch = seatacAirportStore.aveCookie * (getRandomInt(seatacAirportStore.minCust, seatacAirportStore.maxCust))
@@ -116,15 +171,9 @@ liTotalItem.textContent = 'Total: ' + seatacAirportCookiesPurchTotal + ' cookies
 
 //================================
 //================================
-var seattleCenterStore = {
-  minCust: 11,
-  maxCust: 38,
-  aveCookie: 3.7
-  //randCustPerHr: getRandomInt(this.minCust, this.maxCust)
-};
+
 //calc cookies per hour and put in array
-var seattleCenterCookiesPurchArray = [];
-var seattleCenterCookiesPurchTotal = 0;
+
 for (var i = 0; i< 15; i++) {
   //calcs random cust number with the cookie ave
   var seattleCenterCookiesPurch = seattleCenterStore.aveCookie * (getRandomInt(seattleCenterStore.minCust, seattleCenterStore.maxCust))
@@ -157,15 +206,9 @@ liTotalItem.textContent = 'Total: ' + seattleCenterCookiesPurchTotal + ' cookies
 
 //================================
 //================================
-var capitolHillStore = {
-  minCust: 20,
-  maxCust: 38,
-  aveCookie: 2.3
-  //randCustPerHr: getRandomInt(this.minCust, this.maxCust)
-};
+
 //calc cookies per hour and put in array
-var capitolHillCookiesPurchArray = [];
-var capitolHillCookiesPurchTotal = 0;
+
 for (var i = 0; i< 15; i++) {
   //calcs random cust number with the cookie ave
   var capitolHillCookiesPurch = capitolHillStore.aveCookie * (getRandomInt(capitolHillStore.minCust, capitolHillStore.maxCust))
@@ -198,15 +241,9 @@ liTotalItem.textContent = 'Total: ' + capitolHillCookiesPurchTotal + ' cookies';
 
 //================================
 //================================
-var alikStore = {
-  minCust: 2,
-  maxCust: 16,
-  aveCookie: 4.6
-  //randCustPerHr: getRandomInt(this.minCust, this.maxCust)
-};
+
 //calc cookies per hour and put in array
-var alikCookiesPurchArray = [];
-var alikCookiesPurchTotal = 0;
+
 for (var i = 0; i< 15; i++) {
   //calcs random cust number with the cookie ave
   var alikCookiesPurch = alikStore.aveCookie * (getRandomInt(alikStore.minCust, alikStore.maxCust))
