@@ -54,49 +54,11 @@ Objects
 ====================
 */
 var firstAndPikeStore = {
-  name: 'First and Pike' //created in class for DOM things
   minCust: 23,
   maxCust: 65,
   aveCookie: 6.3,
   //randCustPerHr: getRandomInt(this.minCust, this.maxCust) 
-  cookiesSoldEachHr: [] //class suggested added to object
 };
-//this is the random function we used in class
-//wanted obj name so it was tied to the object, vs a function
-//this adds it to the object as a method, but we didn't write it above because it is hard to track the curly brackets
-firstAndPikeStore.CalcCustPerHr = function () {
-  var randAmt = Math.floor (Math.random() * (this.max - this.min + 1) + this.min);
-  return math.round(randAmt * this.aveCookie);
-}
-//another method added to object
-firstAndPikeStore.calcCookiesSoldEachHr = function() {
-  for (var k = 0; k < 15; k++) {
-    this.calcCookiesSoldEachHr.push(this.CalcCustPerHr());
-  }
-
-}
-
-//rendering back to site
-firstAndPikeStore.rendersHours = function() {
-  //ref a section in the HTML
-  this.calcCookiesSoldEachHr();
-  var storesContainer = document.getElementById('stores');
-  var headerElement = document.createElement('h2');
-  headerElement.textContent= this.name;
-  storesContainer.appendChild(headerEl);
-
-  var ulEl= document.createElement('ul');
-
-  for (var y in this.cookiesSoldEachHr) { 
-    //this is the same as
-    // for (var = y; y < this.cookiesSoldEachHours.length; y++)
-    var listItemEl = document.createElement('li');
-    listItemEl.textContent = this.cookiesSoldEachHr[y];
-    ulEl.appendChild(listItemEl);
-
-  }
-  storesContainer.appendChild(ulEl);
-}
 
 var seatacAirportStore = {
   minCust: 3,
