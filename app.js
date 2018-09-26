@@ -1,89 +1,41 @@
 'use strict';
 
+//i made a new app.js to see if it needed a new file to apply it's changes, it did not work
+//nicolas said we could work on debugging it on 9-29-18 sat lab
 
-/*==================
-functions
-====================
-*/
+//make objects using constructor functions
 
-//random function taken from https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random (which was given by Nicholas)
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
+function Store(name, minCust, maxCust, aveCookies) {
+  this.name = name;
+  this.minCustPerHr = minCust;
+  this.maxCustPerHour = maxCust;
+  this.aveCookiesPerCustPerSale = aveCookies;
+  this.cookiesSoldEachHr = [];
 }
 
-
-
-function calcAndDisplayCoookies(storeObject, storeClassId, storeId) {
-  var storeCookiesPurchArray = [];
-  var storeCookiesPurchTotal = 0;
-  for (var i = 0; i< 15; i++) {
-  //calcs random cust number with the cookie ave
-    var storeCookiesPurch = storeObject.aveCookie * (getRandomInt(storeObject.minCust, storeObject.maxCust))
-
-    //this puts it into the store's array
-    storeCookiesPurchArray[i] = storeCookiesPurch;
-    
-    //this is for the store total
-    storeCookiesPurchTotal = storeCookiesPurchTotal + storeCookiesPurch;
-  }
-
-  //get it to write to the html
-  var liItem = document.getElementsByClassName(storeClassId);
-  for (var j=0; j < storeCookiesPurchArray.length; j++) {
-    if ((j+6) < 12) {
-      liItem[j].item = (j+6) + 'am: ' + storeCookiesPurchArray[j] + ' cookies'
-      liItem[j].firstChild.nodeValue = liItem[j].item;
-    } else if (j+6 === 12) {
-      liItem[j].item = (j+6) + 'pm: ' + storeCookiesPurchArray[j] + ' cookies'
-      liItem[j].firstChild.nodeValue = liItem[j].item;
-    } else {
-      liItem[j].item = (j+6-12) + 'pm: ' + storeCookiesPurchArray[j] + ' cookies'
-      liItem[j].firstChild.nodeValue = liItem[j].item;
-    }
-  }
-
-  //get total to write to page
-  var liTotalItem = document.getElementById(storeId);
-  liTotalItem.textContent = 'Total: ' + storeCookiesPurchTotal + ' cookies';
+//adding methods for object constructor function
+//random function we built in class
+//calcs random customer per hour AND mults it against ave cookies so we  get random cookie sales per hr
+Store.prototype.CalcCookiesSalePerHr = function () {
+  var randAmt = Math.floor(Math.random() * (this.maxCustPerHour - this.minCustPerHr + 1) + this.minCustPerHr);
+  return Math.round(randAmt * this.aveCookiesPerCustPerSale);
 }
-
-/*==================
-Objects
-====================
-*/
-var firstAndPikeStore = {
-  name: 'First and Pike' //created in class for DOM things
-  minCust: 23,
-  maxCust: 65,
-  aveCookie: 6.3,
-  //randCustPerHr: getRandomInt(this.minCust, this.maxCust) 
-  cookiesSoldEachHr: [] //class suggested added to object
-};
-//this is the random function we used in class
-//wanted obj name so it was tied to the object, vs a function
-//this adds it to the object as a method, but we didn't write it above because it is hard to track the curly brackets
-firstAndPikeStore.CalcCustPerHr = function () {
-  var randAmt = Math.floor (Math.random() * (this.max - this.min + 1) + this.min);
-  return math.round(randAmt * this.aveCookie);
-}
-//another method added to object
-firstAndPikeStore.calcCookiesSoldEachHr = function() {
+//builds an array of the cookies sold each hour
+Store.prototype.buildCookiesSoldEachHrArray = function() {
   for (var k = 0; k < 15; k++) {
-    this.calcCookiesSoldEachHr.push(this.CalcCustPerHr());
+    this.cookiesSoldEachHr.push(this.CalcCookiesSalePerHr());
   }
 
 }
 
 //rendering back to site
-firstAndPikeStore.rendersHours = function() {
+Store.prototype.rendersHours = function() {
   //ref a section in the HTML
-  this.calcCookiesSoldEachHr();
+  this.CalcCookiesSalePerHr();
   var storesContainer = document.getElementById('stores');
   var headerElement = document.createElement('h2');
   headerElement.textContent= this.name;
-  storesContainer.appendChild(headerEl);
+  storesContainer.appendChild(headerElement);
 
   var ulEl= document.createElement('ul');
 
@@ -98,51 +50,17 @@ firstAndPikeStore.rendersHours = function() {
   storesContainer.appendChild(ulEl);
 }
 
-var seatacAirportStore = {
-  minCust: 3,
-  maxCust: 24,
-  aveCookie: 1.2 //ave cookies per customer
-  //randCustPerHr: getRandomInt(this.minCust, this.maxCust)
-};
+//creating objects
+var pikeAndFirstStore = new Store('First and Pike', 23, 65, 6.3);
+var seaTacStore = new Store('Sea Tac', 3, 24, 1.2);
+var seattleCenterStore = new Store('Seattle Center', 11, 38, 3.7);
+var capitolHillStore = new Store('Capitol Hill', 20, 38, 2.3);
+var alkiStore = new Store('Alki', 2, 16, 4.6);
 
-var seattleCenterStore = {
-  minCust: 11,
-  maxCust: 38,
-  aveCookie: 3.7
-  //randCustPerHr: getRandomInt(this.minCust, this.maxCust)
-};
+var storeArray = [pikeAndFirstStore, seaTacStore, seattleCenterStore, capitolHillStore,alkiStore];
 
-var capitolHillStore = {
-  minCust: 20,
-  maxCust: 38,
-  aveCookie: 2.3
-  //randCustPerHr: getRandomInt(this.minCust, this.maxCust)
-};
-
-var alikStore = {
-  minCust: 2,
-  maxCust: 16,
-  aveCookie: 4.6
-  //randCustPerHr: getRandomInt(this.minCust, this.maxCust)
-};
-
-/*==================
-Global variables
-====================
-*/
-//array of cookies purch
-var allStoresCookiesPurchArray = [];
-
-//array of objects for function
-var allObjects = [firstAndPikeStore, seatacAirportStore, seattleCenterStore, capitolHillStore, alikStore];
-
-//array of store's class IDs for DOM for function
-var allStoreClassIds = ['firstAndPikeTimeList', 'seaTacTimeList', 'seattleCenterTimeList', 'capHillTimeList', 'alkiTimeList'];
-
-//array of store's ID;s for DOm for function
-var allStoreIds = ['firstAndPikeTotaloflist', 'seaTacTotaloflist', 'seattleCenterTotaloflist', 'capHillTotaloflist', 'alkiTotaloflist'];
-
-
-for (var m = 0; m < allObjects.length; m++) {
-  calcAndDisplayCoookies(allObjects[m], allStoreClassIds[m], allStoreIds[m]);
+for (var i = 0; i < storeArray.length; i++) {
+  storeArray[i].CalcCookiesSalePerHr();
+  storeArray[i].buildCookiesSoldEachHrArray();
+  storeArray[i].rendersHours();
 }
