@@ -30,19 +30,6 @@ Store.prototype.buildCookiesSoldEachHrArray = function() {
   }
 }
 
-//calc and/or store total for a store (walks through array and adds it up)
-
-// Store.prototype.totalCookiesSaleForDay = function() {
-//   var totalCookiesSaleForDayVari = 0;
-//   //started at 1 of array so I could add one before to current
-//   for (var m = 1; m < this.cookiesSoldEachHr.length; m++) {
-//     console.log('made it to day cookies for loop '+ m);
-//     var totalCookiesSaleForDayVari = 0;
-//     totalCookiesSaleForDayVari= this.cookiesSoldEachHr[(m-1)] + this.cookiesSoldEachHr[m]; 
-//     this.objTotalCookiesSaleForDayVari = totalCookiesSaleForDayVari;
-//   }
-// }
-
 //rendering back to site
 Store.prototype.rendersHours = function() {
   //ref a section in the HTML
@@ -53,41 +40,24 @@ Store.prototype.rendersHours = function() {
   storesContainer.appendChild(headerElement);
 
   var ulEl= document.createElement('ul');
+  var listItemEltotal = document.createElement('li');
 
   for (var y = 0; y < this.cookiesSoldEachHr.length; y++) { 
-    //this is the same as
-    // for (var = y; y < this.cookiesSoldEachHours.length; y++)
     var listItemEl = document.createElement('li');
-    var listItemEltotal = document.createElement('li');
     
     if ((y+6) < 12) {
-      //console.log('if ' + y);
       listItemEl.textContent = ((y+6) + 'am: ' + this.cookiesSoldEachHr[y] + ' cookies');
-      console.log('if ' + listItemEl.textContent);
-      //listItemEltotal.textContent = ('Total: ' + this.objTotalCookiesSaleForDayVari + ' cookies');
-      //ulEl.appendChild(listItemEl);
     } else if (y+6 === 12) {
-      //console.log('else if ' + y);
       listItemEl.textContent = ((y+6) + 'pm: ' + this.cookiesSoldEachHr[y] + ' cookies');
-      console.log('else if ' + listItemEl.textContent);
-      //listItemEltotal.textContent = ('Total: ' + this.objTotalCookiesSaleForDayVari + ' cookies');
-      //ulEl.appendChild(listItemEl);
     } else {
-      //console.log('else ' + y);
       listItemEl.textContent = ((y+6-12) + 'pm: ' + this.cookiesSoldEachHr[y] + ' cookies');
-      console.log('else ' + listItemEl.textContent);
-      //ulEl.appendChild(listItemEl);
-      //listItemEltotal.textContent = ('Total: ' + this.objTotalCookiesSaleForDayVari + ' cookies');
     }
-    // listItemEltotal.textContent = ('Total: ' + this.objTotalCookiesSaleForDayVari + ' cookies');
-    // console.log(listItemEltotal.textContent);
     ulEl.appendChild(listItemEl);
   }
-  var listItemEltotal = document.createElement('li');
-  listItemEltotal.textContent = ('Total: ' + this.objTotalCookiesSaleForDayVari + ' cookies');
-  console.log(listItemEltotal.textContent);
-  ulEl.appendChild(listItemEltotal);
   
+  listItemEltotal.textContent = ('Total: ' + this.objTotalCookiesSaleForDayVari + ' cookies');
+  ulEl.appendChild(listItemEltotal);
+
   storesContainer.appendChild(ulEl);
 }
 
@@ -101,13 +71,7 @@ var alkiStore = new Store('Alki', 2, 16, 4.6);
 var storeArray = [pikeAndFirstStore, seaTacStore, seattleCenterStore, capitolHillStore,alkiStore];
 
 for (var i = 0; i < storeArray.length; i++) {
-  //console.log(i);
-  console.log(storeArray[i].name);
   storeArray[i].CalcCookiesSalePerHr();
   storeArray[i].buildCookiesSoldEachHrArray();
-  console.log('cookie array ' + storeArray[i].cookiesSoldEachHr);
   storeArray[i].rendersHours();
-  console.log(storeArray[i].objTotalCookiesSaleForDayVari);
-  // storeArray[i].totalCookiesSaleForDay();
-  // console.log('total cookies for the day ' + storeArray[i].objTotalCookiesSaleForDayVari);
 }
