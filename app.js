@@ -11,7 +11,8 @@ function Store(name, minCust, maxCust, aveCookies) {
   this.maxCustPerHour = maxCust;
   this.aveCookiesPerCustPerSale = aveCookies;
   this.cookiesSoldEachHr = [];
-}
+  this.objTotalCookiesSaleForDayVari = 0;
+};
 
 //adding methods for object constructor function
 //random function we built in class
@@ -23,10 +24,11 @@ Store.prototype.CalcCookiesSalePerHr = function () {
 //builds an array of the cookies sold each hour
 Store.prototype.buildCookiesSoldEachHrArray = function() {
   for (var k = 0; k < 15; k++) {
-    this.cookiesSoldEachHr.push(this.CalcCookiesSalePerHr());
+    var tempCalcCookiesPerHr = this.CalcCookiesSalePerHr();
+    this.cookiesSoldEachHr.push(tempCalcCookiesPerHr);
+    this.objTotalCookiesSaleForDayVari = this.objTotalCookiesSaleForDayVari + tempCalcCookiesPerHr;
   }
-
-}
+};
 
 //rendering back to site
 Store.prototype.rendersHours = function() {
@@ -38,17 +40,66 @@ Store.prototype.rendersHours = function() {
   storesContainer.appendChild(headerElement);
 
   var ulEl= document.createElement('ul');
+  var listItemEltotal = document.createElement('li');
 
-  for (var y in this.cookiesSoldEachHr) { 
-    //this is the same as
-    // for (var = y; y < this.cookiesSoldEachHours.length; y++)
+  for (var y = 0; y < this.cookiesSoldEachHr.length; y++) { 
     var listItemEl = document.createElement('li');
-    listItemEl.textContent = this.cookiesSoldEachHr[y];
+    
+    if ((y+6) < 12) {
+      listItemEl.textContent = ((y+6) + 'am: ' + this.cookiesSoldEachHr[y] + ' cookies');
+    } else if (y+6 === 12) {
+      listItemEl.textContent = ((y+6) + 'pm: ' + this.cookiesSoldEachHr[y] + ' cookies');
+    } else {
+      listItemEl.textContent = ((y+6-12) + 'pm: ' + this.cookiesSoldEachHr[y] + ' cookies');
+    }
     ulEl.appendChild(listItemEl);
-
   }
+  
+  listItemEltotal.textContent = ('Total: ' + this.objTotalCookiesSaleForDayVari + ' cookies');
+  ulEl.appendChild(listItemEltotal);
+
   storesContainer.appendChild(ulEl);
-}
+};
+
+//funcion to build header
+//need to figure out how to put in first blank cell in header
+//need to combine rendersTableHeader with rendersTableRows
+Store.prototype.rendersTableHeader = function() {
+  var tableHeaderEl = document.getElementById('tablehead');
+  var trEl = document.createElement('tr');
+   
+  for (var m = 0; m < this.cookiesSoldEachHr.length; m++) {
+    var thEl = document.createElement('th'); 
+    if ((m+6) < 12) {
+      thEl.textContent = ((m+6) + ':00 am');
+    } else if (m+6 === 12) {
+      thEl.textContent = ((m+6) + ':00 pm');
+    } else {
+      thEl.textContent = ((m+6-12) + ':00 pm');
+    }
+    //console.log(thEl);
+    trEl.appendChild(thEl);
+  }
+  tableHeaderEl.appendChild(trEl);
+};
+
+//function to build store rows
+Store.prototype.rendersTableRows = function() {
+  var tableRowEl = document.getElementById('tabledetails');
+  var trEl = document.createElement('tr');
+  var thEl = document.createElement('th');
+  trEl.appendChild(thEl); 
+  for (var r = 0; r < this.cookiesSoldEachHr.length; r++) {
+    thEl.textContent = this.name;
+    var tdEl = document.createElement('td'); 
+    tdEl.textContent = (this.cookiesSoldEachHr[r]);
+    trEl.appendChild(tdEl);
+  }
+  
+  tableRowEl.appendChild(trEl);
+};
+
+
 
 //creating objects
 var pikeAndFirstStore = new Store('First and Pike', 23, 65, 6.3);
@@ -57,10 +108,17 @@ var seattleCenterStore = new Store('Seattle Center', 11, 38, 3.7);
 var capitolHillStore = new Store('Capitol Hill', 20, 38, 2.3);
 var alkiStore = new Store('Alki', 2, 16, 4.6);
 
+
 var storeArray = [pikeAndFirstStore, seaTacStore, seattleCenterStore, capitolHillStore,alkiStore];
 
+//run table header function
+
+//then run code for each store to build rows
 for (var i = 0; i < storeArray.length; i++) {
   storeArray[i].CalcCookiesSalePerHr();
   storeArray[i].buildCookiesSoldEachHrArray();
-  storeArray[i].rendersHours();
+  //storeArray[i].rendersHours(); //we are no longer rendering this way, we are rendering by table
+  storeArray[i].rendersTableRows();
+
 }
+pikeAndFirstStore.rendersTableHeader();
