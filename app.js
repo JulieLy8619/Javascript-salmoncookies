@@ -54,13 +54,32 @@ Store.prototype.rendersHours = function() {
 
   var ulEl= document.createElement('ul');
 
-  for (var y in this.cookiesSoldEachHr) { 
+  for (var y = 0; y < this.cookiesSoldEachHr.length; y++) { 
     //this is the same as
     // for (var = y; y < this.cookiesSoldEachHours.length; y++)
     var listItemEl = document.createElement('li');
-    listItemEl.textContent = this.cookiesSoldEachHr[y];
-    ulEl.appendChild(listItemEl);
+    
+      if ((y+6) < 12) {
+        //console.log('if ' + y);
+        listItemEl.textContent = ((y+6) + 'am: ' + this.cookiesSoldEachHr[y] + ' cookies');
+        console.log('if ' + listItemEl.textContent);
+        //ulEl.appendChild(listItemEl);
+      } else if (y+6 === 12) {
+        //console.log('else if ' + y);
+        listItemEl.textContent = ((y+6) + 'pm: ' + this.cookiesSoldEachHr[y] + ' cookies');
+        console.log('else if ' + listItemEl.textContent);
+        //ulEl.appendChild(listItemEl);
+      } else {
+        //console.log('else ' + y);
+        listItemEl.textContent = ((y+6-12) + 'pm: ' + this.cookiesSoldEachHr[y] + ' cookies');
+        console.log('else ' + listItemEl.textContent);
+        //ulEl.appendChild(listItemEl);
+      }
 
+      
+      //ulEl.appendChild(listItemEl);
+    
+    ulEl.appendChild(listItemEl);
   }
   storesContainer.appendChild(ulEl);
 }
