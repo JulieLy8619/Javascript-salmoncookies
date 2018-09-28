@@ -61,6 +61,20 @@ Store.prototype.rendersHours = function() {
   storesContainer.appendChild(ulEl);
 }
 
+//funcion to build header
+Store.prototype.rendersTable = function() {
+  var tableHeaderEl = document.getElementById('storetable');
+
+  var thEl = document.createElement('tableheader'); 
+    for (var m = 0; m < this.)
+
+
+    thEl.textContent = this.name;
+    trEl.appendChild(thEl);
+
+
+}
+
 //creating objects
 var pikeAndFirstStore = new Store('First and Pike', 23, 65, 6.3);
 var seaTacStore = new Store('Sea Tac', 3, 24, 1.2);
@@ -68,10 +82,15 @@ var seattleCenterStore = new Store('Seattle Center', 11, 38, 3.7);
 var capitolHillStore = new Store('Capitol Hill', 20, 38, 2.3);
 var alkiStore = new Store('Alki', 2, 16, 4.6);
 
+
 var storeArray = [pikeAndFirstStore, seaTacStore, seattleCenterStore, capitolHillStore,alkiStore];
 
+//run table header function
+
+//then run code for each store to build rows
 for (var i = 0; i < storeArray.length; i++) {
   storeArray[i].CalcCookiesSalePerHr();
   storeArray[i].buildCookiesSoldEachHrArray();
-  storeArray[i].rendersHours();
+  //storeArray[i].rendersHours(); //we are no longer rendering this way, we are rendering by table
+
 }
