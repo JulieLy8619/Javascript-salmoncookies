@@ -62,11 +62,13 @@ Store.prototype.rendersHours = function() {
 };
 
 //funcion to build header
-Store.prototype.rendersTable = function() {
+//need to figure out how to put in first blank cell in header
+//need to combine rendersTableHeader with rendersTableRows
+Store.prototype.rendersTableHeader = function() {
   var tableHeaderEl = document.getElementById('tablehead');
   var trEl = document.createElement('tr');
    
-  for (var m = 0; m < this.cookiesSoldEachHr.length; m++){
+  for (var m = 0; m < this.cookiesSoldEachHr.length; m++) {
     var thEl = document.createElement('th'); 
     if ((m+6) < 12) {
       thEl.textContent = ((m+6) + ':00 am');
@@ -75,15 +77,28 @@ Store.prototype.rendersTable = function() {
     } else {
       thEl.textContent = ((m+6-12) + ':00 pm');
     }
-    console.log(thEl);
+    //console.log(thEl);
     trEl.appendChild(thEl);
   }
   tableHeaderEl.appendChild(trEl);
 };
 
+//function to build store rows
+Store.prototype.rendersTableRows = function() {
+  var tableRowEl = document.getElementById('tabledetails');
+  var trEl = document.createElement('tr');
+  var thEl = document.createElement('th');
+  trEl.appendChild(thEl); 
+  for (var r = 0; r < this.cookiesSoldEachHr.length; r++) {
+    thEl.textContent = this.name;
+    var tdEl = document.createElement('td'); 
+    tdEl.textContent = (this.cookiesSoldEachHr[r]);
+    trEl.appendChild(tdEl);
+  }
+  
+  tableRowEl.appendChild(trEl);
+};
 
-//    thEl.textContent = this.name;
-//    trEl.appendChild(thEl);
 
 
 //creating objects
@@ -103,6 +118,7 @@ for (var i = 0; i < storeArray.length; i++) {
   storeArray[i].CalcCookiesSalePerHr();
   storeArray[i].buildCookiesSoldEachHrArray();
   //storeArray[i].rendersHours(); //we are no longer rendering this way, we are rendering by table
+  storeArray[i].rendersTableRows();
 
 }
-pikeAndFirstStore.rendersTable();
+pikeAndFirstStore.rendersTableHeader();
