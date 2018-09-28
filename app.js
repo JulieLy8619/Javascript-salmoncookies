@@ -12,7 +12,7 @@ function Store(name, minCust, maxCust, aveCookies) {
   this.aveCookiesPerCustPerSale = aveCookies;
   this.cookiesSoldEachHr = [];
   this.objTotalCookiesSaleForDayVari = 0;
-}
+};
 
 //adding methods for object constructor function
 //random function we built in class
@@ -28,7 +28,7 @@ Store.prototype.buildCookiesSoldEachHrArray = function() {
     this.cookiesSoldEachHr.push(tempCalcCookiesPerHr);
     this.objTotalCookiesSaleForDayVari = this.objTotalCookiesSaleForDayVari + tempCalcCookiesPerHr;
   }
-}
+};
 
 //rendering back to site
 Store.prototype.rendersHours = function() {
@@ -59,21 +59,32 @@ Store.prototype.rendersHours = function() {
   ulEl.appendChild(listItemEltotal);
 
   storesContainer.appendChild(ulEl);
-}
+};
 
 //funcion to build header
 Store.prototype.rendersTable = function() {
-  var tableHeaderEl = document.getElementById('storetable');
-
-  var thEl = document.createElement('tableheader'); 
-    for (var m = 0; m < this.)
-
-
-    thEl.textContent = this.name;
+  var tableHeaderEl = document.getElementById('tablehead');
+  var trEl = document.createElement('tr');
+   
+  for (var m = 0; m < this.cookiesSoldEachHr.length; m++){
+    var thEl = document.createElement('th'); 
+    if ((m+6) < 12) {
+      thEl.textContent = ((m+6) + ':00 am');
+    } else if (m+6 === 12) {
+      thEl.textContent = ((m+6) + ':00 pm');
+    } else {
+      thEl.textContent = ((m+6-12) + ':00 pm');
+    }
+    console.log(thEl);
     trEl.appendChild(thEl);
+  }
+  tableHeaderEl.appendChild(trEl);
+};
 
 
-}
+//    thEl.textContent = this.name;
+//    trEl.appendChild(thEl);
+
 
 //creating objects
 var pikeAndFirstStore = new Store('First and Pike', 23, 65, 6.3);
@@ -94,3 +105,4 @@ for (var i = 0; i < storeArray.length; i++) {
   //storeArray[i].rendersHours(); //we are no longer rendering this way, we are rendering by table
 
 }
+pikeAndFirstStore.rendersTable();
