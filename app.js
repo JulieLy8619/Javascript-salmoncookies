@@ -58,29 +58,36 @@ Store.prototype.rendersHours = function() {
     //this is the same as
     // for (var = y; y < this.cookiesSoldEachHours.length; y++)
     var listItemEl = document.createElement('li');
+    var listItemEltotal = document.createElement('li');
     
-      if ((y+6) < 12) {
-        //console.log('if ' + y);
-        listItemEl.textContent = ((y+6) + 'am: ' + this.cookiesSoldEachHr[y] + ' cookies');
-        console.log('if ' + listItemEl.textContent);
-        //ulEl.appendChild(listItemEl);
-      } else if (y+6 === 12) {
-        //console.log('else if ' + y);
-        listItemEl.textContent = ((y+6) + 'pm: ' + this.cookiesSoldEachHr[y] + ' cookies');
-        console.log('else if ' + listItemEl.textContent);
-        //ulEl.appendChild(listItemEl);
-      } else {
-        //console.log('else ' + y);
-        listItemEl.textContent = ((y+6-12) + 'pm: ' + this.cookiesSoldEachHr[y] + ' cookies');
-        console.log('else ' + listItemEl.textContent);
-        //ulEl.appendChild(listItemEl);
-      }
-
-      
+    if ((y+6) < 12) {
+      //console.log('if ' + y);
+      listItemEl.textContent = ((y+6) + 'am: ' + this.cookiesSoldEachHr[y] + ' cookies');
+      console.log('if ' + listItemEl.textContent);
+      //listItemEltotal.textContent = ('Total: ' + this.objTotalCookiesSaleForDayVari + ' cookies');
       //ulEl.appendChild(listItemEl);
-    
+    } else if (y+6 === 12) {
+      //console.log('else if ' + y);
+      listItemEl.textContent = ((y+6) + 'pm: ' + this.cookiesSoldEachHr[y] + ' cookies');
+      console.log('else if ' + listItemEl.textContent);
+      //listItemEltotal.textContent = ('Total: ' + this.objTotalCookiesSaleForDayVari + ' cookies');
+      //ulEl.appendChild(listItemEl);
+    } else {
+      //console.log('else ' + y);
+      listItemEl.textContent = ((y+6-12) + 'pm: ' + this.cookiesSoldEachHr[y] + ' cookies');
+      console.log('else ' + listItemEl.textContent);
+      //ulEl.appendChild(listItemEl);
+      //listItemEltotal.textContent = ('Total: ' + this.objTotalCookiesSaleForDayVari + ' cookies');
+    }
+    // listItemEltotal.textContent = ('Total: ' + this.objTotalCookiesSaleForDayVari + ' cookies');
+    // console.log(listItemEltotal.textContent);
     ulEl.appendChild(listItemEl);
   }
+  var listItemEltotal = document.createElement('li');
+  listItemEltotal.textContent = ('Total: ' + this.objTotalCookiesSaleForDayVari + ' cookies');
+  console.log(listItemEltotal.textContent);
+  ulEl.appendChild(listItemEltotal);
+  
   storesContainer.appendChild(ulEl);
 }
 
