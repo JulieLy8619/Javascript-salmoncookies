@@ -11,6 +11,7 @@ function Store(name, minCust, maxCust, aveCookies) {
   this.maxCustPerHour = maxCust;
   this.aveCookiesPerCustPerSale = aveCookies;
   this.cookiesSoldEachHr = [];
+  this.objTotalCookiesSaleForDayVari = 0;
 }
 
 //adding methods for object constructor function
@@ -23,10 +24,24 @@ Store.prototype.CalcCookiesSalePerHr = function () {
 //builds an array of the cookies sold each hour
 Store.prototype.buildCookiesSoldEachHrArray = function() {
   for (var k = 0; k < 15; k++) {
-    this.cookiesSoldEachHr.push(this.CalcCookiesSalePerHr());
+    var tempCalcCookiesPerHr = this.CalcCookiesSalePerHr();
+    this.cookiesSoldEachHr.push(tempCalcCookiesPerHr);
+    this.objTotalCookiesSaleForDayVari = this.objTotalCookiesSaleForDayVari + tempCalcCookiesPerHr;
   }
-
 }
+
+//calc and/or store total for a store (walks through array and adds it up)
+
+// Store.prototype.totalCookiesSaleForDay = function() {
+//   var totalCookiesSaleForDayVari = 0;
+//   //started at 1 of array so I could add one before to current
+//   for (var m = 1; m < this.cookiesSoldEachHr.length; m++) {
+//     console.log('made it to day cookies for loop '+ m);
+//     var totalCookiesSaleForDayVari = 0;
+//     totalCookiesSaleForDayVari= this.cookiesSoldEachHr[(m-1)] + this.cookiesSoldEachHr[m]; 
+//     this.objTotalCookiesSaleForDayVari = totalCookiesSaleForDayVari;
+//   }
+// }
 
 //rendering back to site
 Store.prototype.rendersHours = function() {
@@ -60,7 +75,13 @@ var alkiStore = new Store('Alki', 2, 16, 4.6);
 var storeArray = [pikeAndFirstStore, seaTacStore, seattleCenterStore, capitolHillStore,alkiStore];
 
 for (var i = 0; i < storeArray.length; i++) {
+  //console.log(i);
+  console.log(storeArray[i].name);
   storeArray[i].CalcCookiesSalePerHr();
   storeArray[i].buildCookiesSoldEachHrArray();
+  console.log('cookie array ' + storeArray[i].cookiesSoldEachHr);
   storeArray[i].rendersHours();
+  console.log(storeArray[i].objTotalCookiesSaleForDayVari);
+  // storeArray[i].totalCookiesSaleForDay();
+  // console.log('total cookies for the day ' + storeArray[i].objTotalCookiesSaleForDayVari);
 }
