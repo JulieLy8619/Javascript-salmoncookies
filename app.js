@@ -23,7 +23,7 @@ Store.prototype.calcCookiesSalePerHr = function () {
 };
 //builds an array of the cookies sold each hour
 Store.prototype.buildCookiesSoldEachHrArray = function() {
-  for (var k = 0; k < 16; k++) {
+  for (var k = 0; k < 15; k++) {
     var tempCalcCookiesPerHr = this.calcCookiesSalePerHr();
     this.cookiesSoldEachHr.push(tempCalcCookiesPerHr);
     this.objTotalCookiesSaleForDayVari = this.objTotalCookiesSaleForDayVari + tempCalcCookiesPerHr;
@@ -61,15 +61,13 @@ Store.prototype.rendersHours = function() {
 };
 
 //funcion to build header
-//need to figure out how to put in first blank cell in header
-//need to combine rendersTableHeader with rendersTableRows
 Store.prototype.rendersTableHeader = function() {
   var tableHeaderEl = document.getElementById('tablehead');
   var trEl = document.createElement('tr');
   //var tableRowTotalEl = document.createElement('tr');
   //var tableHeaderTotal = document.createElement('th');
 
-  for (var m = -1; m < this.cookiesSoldEachHr.length; m++) {
+  for (var m = -1; m < this.cookiesSoldEachHr.length + 1; m++) {
     var thEl = document.createElement('th'); 
     //need to figure out space at begining of time array so it's not right above store names
     if (m < 0) {
@@ -93,21 +91,71 @@ Store.prototype.rendersTableRows = function() {
   var tableRowEl = document.getElementById('tabledetails');
   var trEl = document.createElement('tr');
   var thEl = document.createElement('th');
-  //var arrayForTotalsForAllStoresPerHour= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
   trEl.appendChild(thEl); 
   for (var r = 0; r < (this.cookiesSoldEachHr.length + 1); r++) { //why does this one need the length+1, while renderstableheader function didn't need the length +1
+  //console.log('cookie length ' + this.cookiesSoldEachHr.length);
     if (r < this.cookiesSoldEachHr.length) {
       thEl.textContent = this.name;
       var tdEl = document.createElement('td');
       tdEl.textContent = (this.cookiesSoldEachHr[r]);
     } else {
+      console.log('obj total day vari in render table row ' + this.objTotalCookiesSaleForDayVari);
       tdEl.textContent = this.objTotalCookiesSaleForDayVari;
     }
     trEl.appendChild(tdEl);
   }
   tableRowEl.appendChild(trEl);
 };
+
+//creating objects
+var pikeAndFirstStore = new Store('First and Pike', 23, 65, 6.3);
+var seaTacStore = new Store('Sea Tac', 3, 24, 1.2);
+var seattleCenterStore = new Store('Seattle Center', 11, 38, 3.7);
+var capitolHillStore = new Store('Capitol Hill', 20, 38, 2.3);
+var alkiStore = new Store('Alki', 2, 16, 4.6);
+
+
+var storeArray = [pikeAndFirstStore, seaTacStore, seattleCenterStore, capitolHillStore, alkiStore];
+//var arrayForTotalsForAllStoresPerHour= [];
+var arrayForTotalsForAllStoresPerHour= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+
+//this walks through the store array and builds it (does random, make array, and renders)
+//maybe i turn this into a function and call it in a do while loop and if submit is done then it reruns
+
+var allStoresSalesByHour = function(renderStoreArrays){
+  for (var i = 0; i < (renderStoreArrays.length); i++) {
+    for (var q = 0; q < renderStoreArrays[i].cookiesSoldEachHr.length + 1; q++) {
+      if (q < renderStoreArrays[i].cookiesSoldEachHr.length) {
+        //console.log('Is cookiesSoldEachHr.length ' + renderStoreArrays[i].cookiesSoldEachHr.length);
+        arrayForTotalsForAllStoresPerHour[q] = arrayForTotalsForAllStoresPerHour[q] + renderStoreArrays[i].cookiesSoldEachHr[q];
+        //console.log ('i ' + i);
+        //console.log ('q ' + q);
+        //console.log('if q is less than cookies sold each hour length ' + arrayForTotalsForAllStoresPerHour);
+      } else { //this is summing the line total
+        //console.log ('q ' + q);
+        arrayForTotalsForAllStoresPerHour[q] = arrayForTotalsForAllStoresPerHour[q]+ renderStoreArrays[i].objTotalCookiesSaleForDayVari;
+        //console.log('Is cookiesSoldEachHr.length in else statement ' + renderStoreArrays[i].cookiesSoldEachHr.length);
+        //console.log('if q is is in theory totals column ' + arrayForTotalsForAllStoresPerHour);
+      }
+  //console.log(arrayForTotalsForAllStoresPerHour);
+    }
+  }
+};
+
+var renderStores = function(renderStoreArrays) {
+  for (var i = 0; i < renderStoreArrays.length; i++) {
+    renderStoreArrays[i].calcCookiesSalePerHr();
+    renderStoreArrays[i].buildCookiesSoldEachHrArray();
+    renderStoreArrays[i].rendersTableRows();
+    console.log(renderStoreArrays[i].cookiesSoldEachHr);
+  }
+  pikeAndFirstStore.rendersTableHeader();
+};
+
+//this needs to run after the arrays are build in the above for loop
+//just need it to render once, currently only assuming they are open for specific hours, else need to do something to determine who is open the longest and have it fill in blank per store who isn't open during the hours the longer open store is open
+
 
 var handleMakeNewStore = function (submitEvent) {
   submitEvent.preventDefault();
@@ -132,37 +180,6 @@ var handleMakeNewStore = function (submitEvent) {
 var newStoreForm = document.getElementById('newstoregenerator');
 newStoreForm.addEventListener('submit', handleMakeNewStore);
 
-
-//creating objects
-var pikeAndFirstStore = new Store('First and Pike', 23, 65, 6.3);
-var seaTacStore = new Store('Sea Tac', 3, 24, 1.2);
-var seattleCenterStore = new Store('Seattle Center', 11, 38, 3.7);
-var capitolHillStore = new Store('Capitol Hill', 20, 38, 2.3);
-var alkiStore = new Store('Alki', 2, 16, 4.6);
-
-
-var storeArray = [pikeAndFirstStore, seaTacStore, seattleCenterStore, capitolHillStore,alkiStore];
-//var arrayForTotalsForAllStoresPerHour= [];
-var arrayForTotalsForAllStoresPerHour= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-
-for (var i = 0; i < storeArray.length; i++) {
-  storeArray[i].calcCookiesSalePerHr();
-  storeArray[i].buildCookiesSoldEachHrArray();
-  storeArray[i].rendersTableRows();
-
-  //calcs correct for the totals per hour for all the stores, need to figure out how to print this to screen, maybe a function that takes in array arrayForTotalsForAllStoresPerHour as a parameter and prints it to screen?
-  for (var q = 0; q < storeArray[i].cookiesSoldEachHr.length; q++) {
-    //console.log('i is ' + i);
-    //console.log('i made it into for loop, q is ' + q);
-    arrayForTotalsForAllStoresPerHour[q] = arrayForTotalsForAllStoresPerHour[q] + storeArray[i].cookiesSoldEachHr[q];
-    //console.log('inside for loop ' + arrayForTotalsForAllStoresPerHour);
-  }
-
-  //console.log('outside for loop ' + arrayForTotalsForAllStoresPerHour);
-}
-pikeAndFirstStore.rendersTableHeader();
-//this needs to run after the arrays are build in the above for loop
-//just need it to render once, currently only assuming they are open for specific hours, else need to do something to determine who is open the longest and have it fill in blank per store who isn't open during the hours the longer open store is open
-
-
+renderStores(storeArray);
+allStoresSalesByHour(storeArray);
 
