@@ -23,7 +23,7 @@ Store.prototype.CalcCookiesSalePerHr = function () {
 }
 //builds an array of the cookies sold each hour
 Store.prototype.buildCookiesSoldEachHrArray = function() {
-  for (var k = 0; k < 15; k++) {
+  for (var k = 0; k < 16; k++) {
     var tempCalcCookiesPerHr = this.CalcCookiesSalePerHr();
     this.cookiesSoldEachHr.push(tempCalcCookiesPerHr);
     this.objTotalCookiesSaleForDayVari = this.objTotalCookiesSaleForDayVari + tempCalcCookiesPerHr;
@@ -67,17 +67,23 @@ Store.prototype.rendersHours = function() {
 Store.prototype.rendersTableHeader = function() {
   var tableHeaderEl = document.getElementById('tablehead');
   var trEl = document.createElement('tr');
+  var tableRowTotalEl = document.createElement('tr');
+  var tableHeaderTotal = document.createElement('th');
    
-  for (var m = 0; m < this.cookiesSoldEachHr.length; m++) {
+  for (var m = -1; m < this.cookiesSoldEachHr.length; m++) {
     var thEl = document.createElement('th'); 
-    if ((m+6) < 12) {
+    //need to figure out space at begining of time array so it's not right above store names
+    if (m < 0) {
+      thEl.textContent = ('Store Name: ');
+    } else if ((m+6) < 12) {
       thEl.textContent = ((m+6) + ':00 am');
     } else if (m+6 === 12) {
       thEl.textContent = ((m+6) + ':00 pm');
-    } else {
+    } else if ((m+6) < 21) {
       thEl.textContent = ((m+6-12) + ':00 pm');
+    } else {
+       thEl.textContent = 'Total';
     }
-    //console.log(thEl);
     trEl.appendChild(thEl);
   }
   tableHeaderEl.appendChild(trEl);
@@ -88,14 +94,23 @@ Store.prototype.rendersTableRows = function() {
   var tableRowEl = document.getElementById('tabledetails');
   var trEl = document.createElement('tr');
   var thEl = document.createElement('th');
+  //var arrayForTotalsForAllStoresPerHour= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+  
   trEl.appendChild(thEl); 
-  for (var r = 0; r < this.cookiesSoldEachHr.length; r++) {
-    thEl.textContent = this.name;
-    var tdEl = document.createElement('td'); 
-    tdEl.textContent = (this.cookiesSoldEachHr[r]);
+  for (var r = 0; r < (this.cookiesSoldEachHr.length + 1); r++) { //why does this one need the length+1, while renderstableheader function didn't need the length +1
+    if (r < this.cookiesSoldEachHr.length) {
+      thEl.textContent = this.name;
+      var tdEl = document.createElement('td');
+      tdEl.textContent = (this.cookiesSoldEachHr[r]);
+      //console.log('cookiearray ' + this.cookiesSoldEachHr[r]);
+      //arrayForTotalsForAllStoresPerHour[r] = arrayForTotalsForAllStoresPerHour[r] + this.cookiesSoldEachHr[r];
+      //console.log('content at r' + r + ' ' + arrayForTotalsForAllStoresPerHour[r]);
+      //console.log('array for totals for all sotres per hour ' + arrayForTotalsForAllStoresPerHour);
+    } else {
+      tdEl.textContent = this.objTotalCookiesSaleForDayVari;
+    }
     trEl.appendChild(tdEl);
   }
-  
   tableRowEl.appendChild(trEl);
 };
 
@@ -110,15 +125,25 @@ var alkiStore = new Store('Alki', 2, 16, 4.6);
 
 
 var storeArray = [pikeAndFirstStore, seaTacStore, seattleCenterStore, capitolHillStore,alkiStore];
+//var arrayForTotalsForAllStoresPerHour= [];
+var arrayForTotalsForAllStoresPerHour= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
-//run table header function
-
-//then run code for each store to build rows
 for (var i = 0; i < storeArray.length; i++) {
   storeArray[i].CalcCookiesSalePerHr();
   storeArray[i].buildCookiesSoldEachHrArray();
-  //storeArray[i].rendersHours(); //we are no longer rendering this way, we are rendering by table
   storeArray[i].rendersTableRows();
 
+  //calcs correct for the totals per hour for all the stores, need to figure out how to print this to screen, maybe a function that takes in array arrayForTotalsForAllStoresPerHour as a parameter and prints it to screen?
+  for (var q = 0; q < storeArray[i].cookiesSoldEachHr.length; q++) {
+    console.log('i is ' + i);
+    //console.log('i made it into for loop, q is ' + q);
+    arrayForTotalsForAllStoresPerHour[q] = arrayForTotalsForAllStoresPerHour[q] + storeArray[i].cookiesSoldEachHr[q];
+    console.log('inside for loop ' + arrayForTotalsForAllStoresPerHour);
+  }
+  
+  //console.log('outside for loop ' + arrayForTotalsForAllStoresPerHour);
 }
 pikeAndFirstStore.rendersTableHeader();
+//this needs to run after the arrays are build in the above for loop
+//just need it to render once, currently only assuming they are open for specific hours, else need to do something to determine who is open the longest and have it fill in blank per store who isn't open during the hours the longer open store is open
+
