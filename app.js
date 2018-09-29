@@ -132,12 +132,15 @@ for (var i = 0; i < storeArray.length; i++) {
   storeArray[i].CalcCookiesSalePerHr();
   storeArray[i].buildCookiesSoldEachHrArray();
   storeArray[i].rendersTableRows();
+
+  //calcs correct for the totals per hour for all the stores, need to figure out how to print this to screen, maybe a function that takes in array arrayForTotalsForAllStoresPerHour as a parameter and prints it to screen?
   for (var q = 0; q < storeArray[i].cookiesSoldEachHr.length; q++) {
     console.log('i is ' + i);
     //console.log('i made it into for loop, q is ' + q);
     arrayForTotalsForAllStoresPerHour[q] = arrayForTotalsForAllStoresPerHour[q] + storeArray[i].cookiesSoldEachHr[q];
     console.log('inside for loop ' + arrayForTotalsForAllStoresPerHour);
   }
+  
   //console.log('outside for loop ' + arrayForTotalsForAllStoresPerHour);
 }
 pikeAndFirstStore.rendersTableHeader();
