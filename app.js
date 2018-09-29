@@ -20,7 +20,7 @@ Store.prototype.calcCookiesSalePerHr = function () {
 };
 //builds an array of the cookies sold each hour
 Store.prototype.buildCookiesSoldEachHrArray = function() {
-  for (var k = 0; k < 14; k++) {
+  for (var k = 0; k < 15; k++) {
     var tempCalcCookiesPerHr = this.calcCookiesSalePerHr();
     this.cookiesSoldEachHr.push(tempCalcCookiesPerHr);
     this.objTotalCookiesSaleForDayVari = this.objTotalCookiesSaleForDayVari + tempCalcCookiesPerHr;
@@ -62,7 +62,7 @@ Store.prototype.rendersTableHeader = function() {
   var tableHeaderEl = document.getElementById('tablehead');
   var trEl = document.createElement('tr');
 
-  for (var m = -1; m < this.cookiesSoldEachHr.length + 1; m++) {
+  for (var m = -1; m < this.cookiesSoldEachHr.length; m++) {
     var thEl = document.createElement('th');
     if (m < 0) {
       thEl.textContent = ('Store Name: ');
@@ -113,7 +113,7 @@ var alkiStore = new Store('Alki', 2, 16, 4.6);
 
 var storeArray = [pikeAndFirstStore, seaTacStore, seattleCenterStore, capitolHillStore, alkiStore];
 //var arrayForTotalsForAllStoresPerHour= [];
-var arrayForTotalsForAllStoresPerHour= [0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+var arrayForTotalsForAllStoresPerHour= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
 //this walks through the store array and builds it (does random, make array, and renders)
 //maybe i turn this into a function and call it in a do while loop and if submit is done then it reruns
