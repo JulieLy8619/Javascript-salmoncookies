@@ -1,10 +1,27 @@
+/*why doesn't it line up even though i made all the widths the same*/
+
 th {
   border-width: 1px;
   border-style: solid;
-  width: 100px;
+  width: 1500px;
+  /*background-color: red;*/
 }
 
 td {
   border-style: dotted;
   border-width: 1px;
+  width: 1500px;
+  /*background-color: blue;*/
 }
+
+#tablehead {
+  width: 1500px;
+  /*background-color: pink;*/
+} 
+
+#tabledetails {
+  width: 1500px;
+  /*background-color: green;*/
+}
+
+
