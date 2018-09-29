@@ -23,7 +23,7 @@ Store.prototype.CalcCookiesSalePerHr = function () {
 }
 //builds an array of the cookies sold each hour
 Store.prototype.buildCookiesSoldEachHrArray = function() {
-  for (var k = 0; k < 15; k++) {
+  for (var k = 0; k < 16; k++) {
     var tempCalcCookiesPerHr = this.CalcCookiesSalePerHr();
     this.cookiesSoldEachHr.push(tempCalcCookiesPerHr);
     this.objTotalCookiesSaleForDayVari = this.objTotalCookiesSaleForDayVari + tempCalcCookiesPerHr;
@@ -67,17 +67,21 @@ Store.prototype.rendersHours = function() {
 Store.prototype.rendersTableHeader = function() {
   var tableHeaderEl = document.getElementById('tablehead');
   var trEl = document.createElement('tr');
+  var tableRowTotalEl = document.createElement('tr');
+  var tableHeaderTotal = document.createElement('th');
    
   for (var m = 0; m < this.cookiesSoldEachHr.length; m++) {
     var thEl = document.createElement('th'); 
+    //need to figure out space at begining of time array so it's not right above store names
     if ((m+6) < 12) {
       thEl.textContent = ((m+6) + ':00 am');
     } else if (m+6 === 12) {
       thEl.textContent = ((m+6) + ':00 pm');
-    } else {
+    } else if ((m+6) < 21) {
       thEl.textContent = ((m+6-12) + ':00 pm');
+    } else {
+       thEl.textContent = 'Total';
     }
-    //console.log(thEl);
     trEl.appendChild(thEl);
   }
   tableHeaderEl.appendChild(trEl);
@@ -88,15 +92,24 @@ Store.prototype.rendersTableRows = function() {
   var tableRowEl = document.getElementById('tabledetails');
   var trEl = document.createElement('tr');
   var thEl = document.createElement('th');
+  
   trEl.appendChild(thEl); 
-  for (var r = 0; r < this.cookiesSoldEachHr.length; r++) {
-    thEl.textContent = this.name;
-    var tdEl = document.createElement('td'); 
-    tdEl.textContent = (this.cookiesSoldEachHr[r]);
+  for (var r = 0; r < (this.cookiesSoldEachHr.length + 1); r++) { //why does this one need the length+1, while renderstableheader function didn't need the length +1
+    if (r < this.cookiesSoldEachHr.length) {
+      thEl.textContent = this.name;
+      var tdEl = document.createElement('td');
+      tdEl.textContent = (this.cookiesSoldEachHr[r]);
+    } else {
+      tdEl.textContent = this.objTotalCookiesSaleForDayVari;
+    }
     trEl.appendChild(tdEl);
   }
-  
   tableRowEl.appendChild(trEl);
+};
+
+//function to build the footer of totals row
+Storage.prototype.rendersStoresTotalPerHour = function() {
+
 };
 
 

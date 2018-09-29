@@ -1,4 +1,10 @@
-* {
+th {
+  border-width: 1px;
+  border-style: solid;
+  width: 100px;
+}
+
+td {
   border-style: dotted;
   border-width: 1px;
 }
