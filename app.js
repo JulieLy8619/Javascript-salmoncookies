@@ -1,10 +1,7 @@
 'use strict';
 
-//i made a new app.js to see if it needed a new file to apply it's changes, it did not work
-//nicolas said we could work on debugging it on 9-29-18 sat lab
 
 //make objects using constructor functions
-
 function Store(name, minCust, maxCust, aveCookies) {
   this.name = name;
   this.minCustPerHr = minCust;
@@ -64,12 +61,9 @@ Store.prototype.rendersHours = function() {
 Store.prototype.rendersTableHeader = function() {
   var tableHeaderEl = document.getElementById('tablehead');
   var trEl = document.createElement('tr');
-  //var tableRowTotalEl = document.createElement('tr');
-  //var tableHeaderTotal = document.createElement('th');
 
   for (var m = -1; m < this.cookiesSoldEachHr.length + 1; m++) {
-    var thEl = document.createElement('th'); 
-    //need to figure out space at begining of time array so it's not right above store names
+    var thEl = document.createElement('th');
     if (m < 0) {
       thEl.textContent = ('Store Name: ');
     } else if ((m+6) < 12) {
@@ -86,6 +80,8 @@ Store.prototype.rendersTableHeader = function() {
   tableHeaderEl.appendChild(trEl);
 };
 
+
+
 //function to build store rows
 Store.prototype.rendersTableRows = function() {
   var tableRowEl = document.getElementById('tabledetails');
@@ -94,19 +90,18 @@ Store.prototype.rendersTableRows = function() {
 
   trEl.appendChild(thEl); 
   for (var r = 0; r < (this.cookiesSoldEachHr.length + 1); r++) { //why does this one need the length+1, while renderstableheader function didn't need the length +1
-  //console.log('cookie length ' + this.cookiesSoldEachHr.length);
     if (r < this.cookiesSoldEachHr.length) {
       thEl.textContent = this.name;
       var tdEl = document.createElement('td');
       tdEl.textContent = (this.cookiesSoldEachHr[r]);
     } else {
-      console.log('obj total day vari in render table row ' + this.objTotalCookiesSaleForDayVari);
       tdEl.textContent = this.objTotalCookiesSaleForDayVari;
     }
     trEl.appendChild(tdEl);
   }
   tableRowEl.appendChild(trEl);
 };
+
 
 //creating objects
 var pikeAndFirstStore = new Store('First and Pike', 23, 65, 6.3);
@@ -118,29 +113,40 @@ var alkiStore = new Store('Alki', 2, 16, 4.6);
 
 var storeArray = [pikeAndFirstStore, seaTacStore, seattleCenterStore, capitolHillStore, alkiStore];
 //var arrayForTotalsForAllStoresPerHour= [];
-var arrayForTotalsForAllStoresPerHour= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+var arrayForTotalsForAllStoresPerHour= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
 //this walks through the store array and builds it (does random, make array, and renders)
 //maybe i turn this into a function and call it in a do while loop and if submit is done then it reruns
 
-var allStoresSalesByHour = function(renderStoreArrays){
+var allStoresSalesByHour = function(renderStoreArrays) {
   for (var i = 0; i < (renderStoreArrays.length); i++) {
-    for (var q = 0; q < renderStoreArrays[i].cookiesSoldEachHr.length + 1; q++) {
-      if (q < renderStoreArrays[i].cookiesSoldEachHr.length) {
-        //console.log('Is cookiesSoldEachHr.length ' + renderStoreArrays[i].cookiesSoldEachHr.length);
+    for (var q = 0; q < renderStoreArrays[i].cookiesSoldEachHr.length; q++) {
+      if (q < renderStoreArrays[i].cookiesSoldEachHr.length - 1) {
         arrayForTotalsForAllStoresPerHour[q] = arrayForTotalsForAllStoresPerHour[q] + renderStoreArrays[i].cookiesSoldEachHr[q];
-        //console.log ('i ' + i);
-        //console.log ('q ' + q);
-        //console.log('if q is less than cookies sold each hour length ' + arrayForTotalsForAllStoresPerHour);
       } else { //this is summing the line total
-        //console.log ('q ' + q);
         arrayForTotalsForAllStoresPerHour[q] = arrayForTotalsForAllStoresPerHour[q]+ renderStoreArrays[i].objTotalCookiesSaleForDayVari;
-        //console.log('Is cookiesSoldEachHr.length in else statement ' + renderStoreArrays[i].cookiesSoldEachHr.length);
-        //console.log('if q is is in theory totals column ' + arrayForTotalsForAllStoresPerHour);
       }
-  //console.log(arrayForTotalsForAllStoresPerHour);
     }
   }
+};
+//function to render footer row
+var rendersTableFooter = function(paramArrayForTotalsForAllStoresPerHour) {
+  var tablefooterEl = document.getElementById('tablefoot');
+  var trFootEl = document.createElement('tr');
+  var trfooterheaderEl = document.createElement('th');
+
+  for (var g = -1; g < paramArrayForTotalsForAllStoresPerHour.length; g++) {
+    if (g < 0) {
+      trfooterheaderEl.textContent = ('Total: ');
+      trFootEl.appendChild(trfooterheaderEl);
+    } else {
+      var tdFootEl = document.createElement('td');
+      tdFootEl.textContent = paramArrayForTotalsForAllStoresPerHour[g];
+      console.log(tdFootEl);
+      trFootEl.appendChild(tdFootEl);
+    }
+  }
+  tablefooterEl.appendChild(trFootEl);
 };
 
 var renderStores = function(renderStoreArrays) {
@@ -148,7 +154,7 @@ var renderStores = function(renderStoreArrays) {
     renderStoreArrays[i].calcCookiesSalePerHr();
     renderStoreArrays[i].buildCookiesSoldEachHrArray();
     renderStoreArrays[i].rendersTableRows();
-    console.log(renderStoreArrays[i].cookiesSoldEachHr);
+    //console.log(renderStoreArrays[i].cookiesSoldEachHr);
   }
   pikeAndFirstStore.rendersTableHeader();
 };
@@ -174,7 +180,7 @@ var handleMakeNewStore = function (submitEvent) {
   newAddingStore = new Store(newStoreName, newStoreMin, newStoreMax, newStoreAveCookies);
   //console.log(newAddingStore);
   storeArray.push(newAddingStore);
-  console.log('in handle ' + storeArray);
+  //console.log('in handle ' + storeArray);
 };
 
 var newStoreForm = document.getElementById('newstoregenerator');
@@ -182,4 +188,6 @@ newStoreForm.addEventListener('submit', handleMakeNewStore);
 
 renderStores(storeArray);
 allStoresSalesByHour(storeArray);
+rendersTableFooter(arrayForTotalsForAllStoresPerHour);
+
 
