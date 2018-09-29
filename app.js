@@ -12,7 +12,7 @@ function Store(name, minCust, maxCust, aveCookies) {
   this.aveCookiesPerCustPerSale = aveCookies;
   this.cookiesSoldEachHr = [];
   this.objTotalCookiesSaleForDayVari = 0;
-};
+}
 
 //adding methods for object constructor function
 //random function we built in class
@@ -20,7 +20,7 @@ function Store(name, minCust, maxCust, aveCookies) {
 Store.prototype.CalcCookiesSalePerHr = function () {
   var randAmt = Math.floor(Math.random() * (this.maxCustPerHour - this.minCustPerHr + 1) + this.minCustPerHr);
   return Math.round(randAmt * this.aveCookiesPerCustPerSale);
-}
+};
 //builds an array of the cookies sold each hour
 Store.prototype.buildCookiesSoldEachHrArray = function() {
   for (var k = 0; k < 16; k++) {
@@ -44,7 +44,6 @@ Store.prototype.rendersHours = function() {
 
   for (var y = 0; y < this.cookiesSoldEachHr.length; y++) { 
     var listItemEl = document.createElement('li');
-    
     if ((y+6) < 12) {
       listItemEl.textContent = ((y+6) + 'am: ' + this.cookiesSoldEachHr[y] + ' cookies');
     } else if (y+6 === 12) {
@@ -67,8 +66,8 @@ Store.prototype.rendersHours = function() {
 Store.prototype.rendersTableHeader = function() {
   var tableHeaderEl = document.getElementById('tablehead');
   var trEl = document.createElement('tr');
-  var tableRowTotalEl = document.createElement('tr');
-  var tableHeaderTotal = document.createElement('th');
+  //var tableRowTotalEl = document.createElement('tr');
+  //var tableHeaderTotal = document.createElement('th');
    
   for (var m = -1; m < this.cookiesSoldEachHr.length; m++) {
     var thEl = document.createElement('th'); 
@@ -82,7 +81,7 @@ Store.prototype.rendersTableHeader = function() {
     } else if ((m+6) < 21) {
       thEl.textContent = ((m+6-12) + ':00 pm');
     } else {
-       thEl.textContent = 'Total';
+      thEl.textContent = 'Total';
     }
     trEl.appendChild(thEl);
   }
@@ -146,4 +145,6 @@ for (var i = 0; i < storeArray.length; i++) {
 pikeAndFirstStore.rendersTableHeader();
 //this needs to run after the arrays are build in the above for loop
 //just need it to render once, currently only assuming they are open for specific hours, else need to do something to determine who is open the longest and have it fill in blank per store who isn't open during the hours the longer open store is open
+
+
 
