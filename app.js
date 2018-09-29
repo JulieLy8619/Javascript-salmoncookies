@@ -17,14 +17,14 @@ function Store(name, minCust, maxCust, aveCookies) {
 //adding methods for object constructor function
 //random function we built in class
 //calcs random customer per hour AND mults it against ave cookies so we  get random cookie sales per hr
-Store.prototype.CalcCookiesSalePerHr = function () {
+Store.prototype.calcCookiesSalePerHr = function () {
   var randAmt = Math.floor(Math.random() * (this.maxCustPerHour - this.minCustPerHr + 1) + this.minCustPerHr);
   return Math.round(randAmt * this.aveCookiesPerCustPerSale);
 };
 //builds an array of the cookies sold each hour
 Store.prototype.buildCookiesSoldEachHrArray = function() {
   for (var k = 0; k < 16; k++) {
-    var tempCalcCookiesPerHr = this.CalcCookiesSalePerHr();
+    var tempCalcCookiesPerHr = this.calcCookiesSalePerHr();
     this.cookiesSoldEachHr.push(tempCalcCookiesPerHr);
     this.objTotalCookiesSaleForDayVari = this.objTotalCookiesSaleForDayVari + tempCalcCookiesPerHr;
   }
@@ -33,7 +33,7 @@ Store.prototype.buildCookiesSoldEachHrArray = function() {
 //rendering back to site
 Store.prototype.rendersHours = function() {
   //ref a section in the HTML
-  this.CalcCookiesSalePerHr();
+  this.calcCookiesSalePerHr();
   var storesContainer = document.getElementById('stores');
   var headerElement = document.createElement('h2');
   headerElement.textContent= this.name;
@@ -53,7 +53,7 @@ Store.prototype.rendersHours = function() {
     }
     ulEl.appendChild(listItemEl);
   }
-  
+
   listItemEltotal.textContent = ('Total: ' + this.objTotalCookiesSaleForDayVari + ' cookies');
   ulEl.appendChild(listItemEltotal);
 
@@ -68,7 +68,7 @@ Store.prototype.rendersTableHeader = function() {
   var trEl = document.createElement('tr');
   //var tableRowTotalEl = document.createElement('tr');
   //var tableHeaderTotal = document.createElement('th');
-   
+
   for (var m = -1; m < this.cookiesSoldEachHr.length; m++) {
     var thEl = document.createElement('th'); 
     //need to figure out space at begining of time array so it's not right above store names
@@ -94,17 +94,13 @@ Store.prototype.rendersTableRows = function() {
   var trEl = document.createElement('tr');
   var thEl = document.createElement('th');
   //var arrayForTotalsForAllStoresPerHour= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-  
+
   trEl.appendChild(thEl); 
   for (var r = 0; r < (this.cookiesSoldEachHr.length + 1); r++) { //why does this one need the length+1, while renderstableheader function didn't need the length +1
     if (r < this.cookiesSoldEachHr.length) {
       thEl.textContent = this.name;
       var tdEl = document.createElement('td');
       tdEl.textContent = (this.cookiesSoldEachHr[r]);
-      //console.log('cookiearray ' + this.cookiesSoldEachHr[r]);
-      //arrayForTotalsForAllStoresPerHour[r] = arrayForTotalsForAllStoresPerHour[r] + this.cookiesSoldEachHr[r];
-      //console.log('content at r' + r + ' ' + arrayForTotalsForAllStoresPerHour[r]);
-      //console.log('array for totals for all sotres per hour ' + arrayForTotalsForAllStoresPerHour);
     } else {
       tdEl.textContent = this.objTotalCookiesSaleForDayVari;
     }
@@ -113,6 +109,28 @@ Store.prototype.rendersTableRows = function() {
   tableRowEl.appendChild(trEl);
 };
 
+var handleMakeNewStore = function (submitEvent) {
+  submitEvent.preventDefault();
+  submitEvent.stopPropagation();//this is just for habit right now, this doesn't do anything to this code currently
+  //console.log(submitEvent.target.name.value);
+  var newAddingStore;
+  var newStoreName = submitEvent.target.storename.value;
+  var newStoreMin = submitEvent.target.storemin.value;
+  var newStoreMax = submitEvent.target.storemax.value;
+  var newStoreAveCookies = submitEvent.target.storeave.value;
+
+  //console.log(submitEvent.target.storename.value);
+
+  //console.log(newStoreName, newStoreMin, newStoreMax, newStoreAveCookies);
+
+  newAddingStore = new Store(newStoreName, newStoreMin, newStoreMax, newStoreAveCookies);
+  //console.log(newAddingStore);
+  storeArray.push(newAddingStore);
+  console.log('in handle ' + storeArray);
+};
+
+var newStoreForm = document.getElementById('newstoregenerator');
+newStoreForm.addEventListener('submit', handleMakeNewStore);
 
 
 //creating objects
@@ -128,18 +146,18 @@ var storeArray = [pikeAndFirstStore, seaTacStore, seattleCenterStore, capitolHil
 var arrayForTotalsForAllStoresPerHour= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
 for (var i = 0; i < storeArray.length; i++) {
-  storeArray[i].CalcCookiesSalePerHr();
+  storeArray[i].calcCookiesSalePerHr();
   storeArray[i].buildCookiesSoldEachHrArray();
   storeArray[i].rendersTableRows();
 
   //calcs correct for the totals per hour for all the stores, need to figure out how to print this to screen, maybe a function that takes in array arrayForTotalsForAllStoresPerHour as a parameter and prints it to screen?
   for (var q = 0; q < storeArray[i].cookiesSoldEachHr.length; q++) {
-    console.log('i is ' + i);
+    //console.log('i is ' + i);
     //console.log('i made it into for loop, q is ' + q);
     arrayForTotalsForAllStoresPerHour[q] = arrayForTotalsForAllStoresPerHour[q] + storeArray[i].cookiesSoldEachHr[q];
-    console.log('inside for loop ' + arrayForTotalsForAllStoresPerHour);
+    //console.log('inside for loop ' + arrayForTotalsForAllStoresPerHour);
   }
-  
+
   //console.log('outside for loop ' + arrayForTotalsForAllStoresPerHour);
 }
 pikeAndFirstStore.rendersTableHeader();
