@@ -30,6 +30,6 @@ td {
 table {
   table-layout: auto;
   column-width: 150px;
-  background-color: blue;
+  /* background-color: blue; */
 }
 
