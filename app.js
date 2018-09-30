@@ -131,8 +131,8 @@ var allStoresSalesByHour = function(renderStoreArrays) {
   }
 };
 //function to render footer row
+var tablefooterEl = document.getElementById('tablefoot');
 var rendersTableFooter = function(paramArrayForTotalsForAllStoresPerHour) {
-  var tablefooterEl = document.getElementById('tablefoot');
   var trFootEl = document.createElement('tr');
   var trfooterheaderEl = document.createElement('th');
 
@@ -180,7 +180,21 @@ var handleMakeNewStore = function (submitEvent) {
   newAddingStore = new Store(newStoreName, newStoreMin, newStoreMax, newStoreAveCookies);
   //console.log(newAddingStore);
   storeArray.push(newAddingStore);
-  doAllTheProcesses(storeArray,arrayForTotalsForAllStoresPerHour);
+  newAddingStore.calcCookiesSalePerHr();
+  newAddingStore.buildCookiesSoldEachHrArray();
+  newAddingStore.rendersTableRows();
+  arrayForTotalsForAllStoresPerHour= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+  allStoresSalesByHour(storeArray);
+  //move footer tag variable to global variable
+  //delete row
+  //then can run the following
+  tablefooterEl.deleteRow(0);
+  rendersTableFooter(arrayForTotalsForAllStoresPerHour);
+
+  //renderStores(storeArray);
+  //allStoresSalesByHour(storeArray);
+  //rendersTableFooter(arrayForTotalsForAllStoresPerHour);
+  
   //console.log('in handle ' + storeArray);
 };
 
@@ -195,3 +209,8 @@ newStoreForm.addEventListener('submit', handleMakeNewStore);
 
 // doAllTheProcesses(storeArray,arrayForTotalsForAllStoresPerHour);
 
+renderStores(storeArray);
+allStoresSalesByHour(storeArray);
+rendersTableFooter(arrayForTotalsForAllStoresPerHour);
+
+//if i really want to try to verify they put in valid min and max, hint validate
