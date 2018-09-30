@@ -28,41 +28,42 @@ Store.prototype.buildCookiesSoldEachHrArray = function() {
 };
 
 //rendering back to site
-Store.prototype.rendersHours = function() {
-  //ref a section in the HTML
-  this.calcCookiesSalePerHr();
-  var storesContainer = document.getElementById('stores');
-  var headerElement = document.createElement('h2');
-  headerElement.textContent= this.name;
-  storesContainer.appendChild(headerElement);
+//lab 7 made us put it in a table and this became obsolete
+// Store.prototype.rendersHours = function() {
+//   //ref a section in the HTML
+//   this.calcCookiesSalePerHr();
+//   var storesContainer = document.getElementById('stores');
+//   var headerElement = document.createElement('h2');
+//   headerElement.textContent= this.name;
+//   storesContainer.appendChild(headerElement);
 
-  var ulEl= document.createElement('ul');
-  var listItemEltotal = document.createElement('li');
+//   var ulEl= document.createElement('ul');
+//   var listItemEltotal = document.createElement('li');
 
-  for (var y = 0; y < this.cookiesSoldEachHr.length; y++) { 
-    var listItemEl = document.createElement('li');
-    if ((y+6) < 12) {
-      listItemEl.textContent = ((y+6) + 'am: ' + this.cookiesSoldEachHr[y] + ' cookies');
-    } else if (y+6 === 12) {
-      listItemEl.textContent = ((y+6) + 'pm: ' + this.cookiesSoldEachHr[y] + ' cookies');
-    } else {
-      listItemEl.textContent = ((y+6-12) + 'pm: ' + this.cookiesSoldEachHr[y] + ' cookies');
-    }
-    ulEl.appendChild(listItemEl);
-  }
+//   for (var y = 0; y < this.cookiesSoldEachHr.length; y++) { 
+//     var listItemEl = document.createElement('li');
+//     if ((y+6) < 12) {
+//       listItemEl.textContent = ((y+6) + 'am: ' + this.cookiesSoldEachHr[y] + ' cookies');
+//     } else if (y+6 === 12) {
+//       listItemEl.textContent = ((y+6) + 'pm: ' + this.cookiesSoldEachHr[y] + ' cookies');
+//     } else {
+//       listItemEl.textContent = ((y+6-12) + 'pm: ' + this.cookiesSoldEachHr[y] + ' cookies');
+//     }
+//     ulEl.appendChild(listItemEl);
+//   }
 
-  listItemEltotal.textContent = ('Total: ' + this.objTotalCookiesSaleForDayVari + ' cookies');
-  ulEl.appendChild(listItemEltotal);
+//   listItemEltotal.textContent = ('Total: ' + this.objTotalCookiesSaleForDayVari + ' cookies');
+//   ulEl.appendChild(listItemEltotal);
 
-  storesContainer.appendChild(ulEl);
-};
+//   storesContainer.appendChild(ulEl);
+// };
 
 //funcion to build header
 Store.prototype.rendersTableHeader = function() {
   var tableHeaderEl = document.getElementById('tablehead');
   var trEl = document.createElement('tr');
 
-  for (var m = -1; m < this.cookiesSoldEachHr.length + 1; m++) {
+  for (var m = -1; m < this.cookiesSoldEachHr.length; m++) {
     var thEl = document.createElement('th');
     if (m < 0) {
       thEl.textContent = ('Store Name: ');
@@ -70,7 +71,7 @@ Store.prototype.rendersTableHeader = function() {
       thEl.textContent = ((m+6) + ':00 am');
     } else if (m+6 === 12) {
       thEl.textContent = ((m+6) + ':00 pm');
-    } else if ((m+6) < 21) {
+    } else if ((m+6) < 20) {
       thEl.textContent = ((m+6-12) + ':00 pm');
     } else {
       thEl.textContent = 'Total';
@@ -130,8 +131,8 @@ var allStoresSalesByHour = function(renderStoreArrays) {
   }
 };
 //function to render footer row
+var tablefooterEl = document.getElementById('tablefoot');
 var rendersTableFooter = function(paramArrayForTotalsForAllStoresPerHour) {
-  var tablefooterEl = document.getElementById('tablefoot');
   var trFootEl = document.createElement('tr');
   var trfooterheaderEl = document.createElement('th');
 
@@ -154,7 +155,6 @@ var renderStores = function(renderStoreArrays) {
     renderStoreArrays[i].calcCookiesSalePerHr();
     renderStoreArrays[i].buildCookiesSoldEachHrArray();
     renderStoreArrays[i].rendersTableRows();
-    //console.log(renderStoreArrays[i].cookiesSoldEachHr);
   }
   pikeAndFirstStore.rendersTableHeader();
 };
@@ -180,14 +180,37 @@ var handleMakeNewStore = function (submitEvent) {
   newAddingStore = new Store(newStoreName, newStoreMin, newStoreMax, newStoreAveCookies);
   //console.log(newAddingStore);
   storeArray.push(newAddingStore);
+  newAddingStore.calcCookiesSalePerHr();
+  newAddingStore.buildCookiesSoldEachHrArray();
+  newAddingStore.rendersTableRows();
+  arrayForTotalsForAllStoresPerHour= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+  allStoresSalesByHour(storeArray);
+  //move footer tag variable to global variable
+  //delete row
+  //then can run the following
+  tablefooterEl.deleteRow(0);
+  rendersTableFooter(arrayForTotalsForAllStoresPerHour);
+
+  //renderStores(storeArray);
+  //allStoresSalesByHour(storeArray);
+  //rendersTableFooter(arrayForTotalsForAllStoresPerHour);
+  
   //console.log('in handle ' + storeArray);
 };
 
 var newStoreForm = document.getElementById('newstoregenerator');
 newStoreForm.addEventListener('submit', handleMakeNewStore);
 
+// var doAllTheProcesses = function(storeArrayVari, arrayForTotalsForAllStoresPerHourVari) {
+//   renderStores(storeArrayVari);
+//   allStoresSalesByHour(storeArrayVari);
+//   rendersTableFooter(arrayForTotalsForAllStoresPerHourVari);
+// };
+
+// doAllTheProcesses(storeArray,arrayForTotalsForAllStoresPerHour);
+
 renderStores(storeArray);
 allStoresSalesByHour(storeArray);
 rendersTableFooter(arrayForTotalsForAllStoresPerHour);
 
-
+//if i really want to try to verify they put in valid min and max, hint validate
