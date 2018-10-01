@@ -6,30 +6,24 @@ th {
   /* background-color: red; */
 }
 
+html{
+  background: rgb(231, 101, 61);
+}
+
+form {
+  background: rgb(209, 169, 39);
+  width: 50%;
+}
 td {
   border-style: dotted;
   border-width: 1px;
   width: 200px;
-  /* background-color: blue; */
-}
-
-#tablehead {
-  /* width: 200px; */
-  /*background-color: pink;*/
-} 
-
-#tabledetails {
-  /* width: 200px; */
-  /*background-color: green;*/
-}
-
-#tablefoot {
-  /* width: 200px; */
+  background-color: rgb(177, 77, 31);
 }
 
 table {
   table-layout: auto;
   column-width: 150px;
-  /* background-color: blue; */
+  background-color: rgb(80, 38, 21);
 }
 
