@@ -27,37 +27,6 @@ Store.prototype.buildCookiesSoldEachHrArray = function() {
   }
 };
 
-//rendering back to site
-//lab 7 made us put it in a table and this became obsolete
-// Store.prototype.rendersHours = function() {
-//   //ref a section in the HTML
-//   this.calcCookiesSalePerHr();
-//   var storesContainer = document.getElementById('stores');
-//   var headerElement = document.createElement('h2');
-//   headerElement.textContent= this.name;
-//   storesContainer.appendChild(headerElement);
-
-//   var ulEl= document.createElement('ul');
-//   var listItemEltotal = document.createElement('li');
-
-//   for (var y = 0; y < this.cookiesSoldEachHr.length; y++) { 
-//     var listItemEl = document.createElement('li');
-//     if ((y+6) < 12) {
-//       listItemEl.textContent = ((y+6) + 'am: ' + this.cookiesSoldEachHr[y] + ' cookies');
-//     } else if (y+6 === 12) {
-//       listItemEl.textContent = ((y+6) + 'pm: ' + this.cookiesSoldEachHr[y] + ' cookies');
-//     } else {
-//       listItemEl.textContent = ((y+6-12) + 'pm: ' + this.cookiesSoldEachHr[y] + ' cookies');
-//     }
-//     ulEl.appendChild(listItemEl);
-//   }
-
-//   listItemEltotal.textContent = ('Total: ' + this.objTotalCookiesSaleForDayVari + ' cookies');
-//   ulEl.appendChild(listItemEltotal);
-
-//   storesContainer.appendChild(ulEl);
-// };
-
 //funcion to build header
 Store.prototype.rendersTableHeader = function() {
   var tableHeaderEl = document.getElementById('tablehead');
@@ -81,8 +50,6 @@ Store.prototype.rendersTableHeader = function() {
   tableHeaderEl.appendChild(trEl);
 };
 
-
-
 //function to build store rows
 Store.prototype.rendersTableRows = function() {
   var tableRowEl = document.getElementById('tabledetails');
@@ -90,7 +57,7 @@ Store.prototype.rendersTableRows = function() {
   var thEl = document.createElement('th');
 
   trEl.appendChild(thEl); 
-  for (var r = 0; r < (this.cookiesSoldEachHr.length + 1); r++) { //why does this one need the length+1, while renderstableheader function didn't need the length +1
+  for (var r = 0; r < (this.cookiesSoldEachHr.length + 1); r++) {
     if (r < this.cookiesSoldEachHr.length) {
       thEl.textContent = this.name;
       var tdEl = document.createElement('td');
@@ -113,12 +80,10 @@ var alkiStore = new Store('Alki', 2, 16, 4.6);
 
 
 var storeArray = [pikeAndFirstStore, seaTacStore, seattleCenterStore, capitolHillStore, alkiStore];
-//var arrayForTotalsForAllStoresPerHour= [];
 var arrayForTotalsForAllStoresPerHour= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
-//this walks through the store array and builds it (does random, make array, and renders)
-//maybe i turn this into a function and call it in a do while loop and if submit is done then it reruns
 
+//adds up the columns for the totals line
 var allStoresSalesByHour = function(renderStoreArrays) {
   for (var i = 0; i < (renderStoreArrays.length); i++) {
     for (var q = 0; q < renderStoreArrays[i].cookiesSoldEachHr.length; q++) {
@@ -130,6 +95,7 @@ var allStoresSalesByHour = function(renderStoreArrays) {
     }
   }
 };
+
 //function to render footer row
 var tablefooterEl = document.getElementById('tablefoot');
 var rendersTableFooter = function(paramArrayForTotalsForAllStoresPerHour) {
@@ -150,6 +116,7 @@ var rendersTableFooter = function(paramArrayForTotalsForAllStoresPerHour) {
   tablefooterEl.appendChild(trFootEl);
 };
 
+//this walks through the store array and builds it (does random, make array, and renders
 var renderStores = function(renderStoreArrays) {
   for (var i = 0; i < renderStoreArrays.length; i++) {
     renderStoreArrays[i].calcCookiesSalePerHr();
@@ -159,23 +126,17 @@ var renderStores = function(renderStoreArrays) {
   pikeAndFirstStore.rendersTableHeader();
 };
 
-//this needs to run after the arrays are build in the above for loop
-//just need it to render once, currently only assuming they are open for specific hours, else need to do something to determine who is open the longest and have it fill in blank per store who isn't open during the hours the longer open store is open
+//currently only assuming they are open for specific hours, else need to do something to determine who is open the longest and have it fill in blank per store who isn't open during the hours the longer open store is open
 
 
 var handleMakeNewStore = function (submitEvent) {
   submitEvent.preventDefault();
-  submitEvent.stopPropagation();//this is just for habit right now, this doesn't do anything to this code currently
-  //console.log(submitEvent.target.name.value);
+  submitEvent.stopPropagation();
   var newAddingStore;
   var newStoreName = submitEvent.target.storename.value;
   var newStoreMin = submitEvent.target.storemin.value;
   var newStoreMax = submitEvent.target.storemax.value;
   var newStoreAveCookies = submitEvent.target.storeave.value;
-
-  //console.log(submitEvent.target.storename.value);
-
-  //console.log(newStoreName, newStoreMin, newStoreMax, newStoreAveCookies);
 
   newAddingStore = new Store(newStoreName, newStoreMin, newStoreMax, newStoreAveCookies);
   //console.log(newAddingStore);
@@ -185,32 +146,15 @@ var handleMakeNewStore = function (submitEvent) {
   newAddingStore.rendersTableRows();
   arrayForTotalsForAllStoresPerHour= [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
   allStoresSalesByHour(storeArray);
-  //move footer tag variable to global variable
-  //delete row
-  //then can run the following
-  tablefooterEl.deleteRow(0);
+  tablefooterEl.deleteRow(0); //TA david gave me this, I understand what it does. (it is deleting the row at position 0)
   rendersTableFooter(arrayForTotalsForAllStoresPerHour);
-
-  //renderStores(storeArray);
-  //allStoresSalesByHour(storeArray);
-  //rendersTableFooter(arrayForTotalsForAllStoresPerHour);
-  
-  //console.log('in handle ' + storeArray);
 };
 
 var newStoreForm = document.getElementById('newstoregenerator');
 newStoreForm.addEventListener('submit', handleMakeNewStore);
 
-// var doAllTheProcesses = function(storeArrayVari, arrayForTotalsForAllStoresPerHourVari) {
-//   renderStores(storeArrayVari);
-//   allStoresSalesByHour(storeArrayVari);
-//   rendersTableFooter(arrayForTotalsForAllStoresPerHourVari);
-// };
-
-// doAllTheProcesses(storeArray,arrayForTotalsForAllStoresPerHour);
-
 renderStores(storeArray);
 allStoresSalesByHour(storeArray);
 rendersTableFooter(arrayForTotalsForAllStoresPerHour);
 
-//if i really want to try to verify they put in valid min and max, hint validate
+//personal stretch goal, if i really want to try to verify they put in valid min and max, hint: validate
