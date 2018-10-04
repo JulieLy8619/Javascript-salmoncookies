@@ -101,3 +101,70 @@ A different background color for elements such boxes and tables (so make sure th
 Anything else you'd like to add related to style. But remember: simplicity, clarity, and consistency are good things in design.
 Be thoughtful about layout and overall organization of the page.
 Include all of the typical stuff that you'll find on the home page of a business: locations, hours, contact information, some text about how awesome the business is, etc. Be creative, and again, think about what is meaningful to a typical end user.
+
+====================================================
+lab 7
+=================================================
+Assignment Overview: Lab 7
+Implement a Constructor Function
+In class, we learned how to refactor a group of object literals by using a constructor function and creating instances.
+
+Let's replace your object literals for the salmon cookie stands with a single constructor function that, when called with 'new', creates new instances.
+
+Your code will end up with probably 1/4 the number of lines it had before refactoring, and every line of code you don't have is one you don't need to debug!
+
+See pages 106-109 in your textbook for a constructor example... and especially focus on 108 and 109. Also refer to the demo code from class that showed how we can view a constructor function as a translation of an object literal.
+
+Replace the Lists with a Table
+We will also be replacing the lists of data for each store, and building a single table of data instead! Tables are much easier to read than lists, and presenting data in a table makes analysis more intuitive and comprehensive.
+
+What numbers should go into a table? Your client, Pat, has reviewed the lists of data you dutifully provided in the previous assignment, and has decided that's actually not the best way to view the information. Here's what Pat wants:
+
+A table to show the total amount of projected cookie needs at each location, with the table displaying the cookie stand location, the total number of cookies needed for each location, an hourly breakdown of total cookies sales for each location, and [STRETCH GOAL] a footer row of totals for each column.
+Here's what it should look like, in general (this example is for structural and layout purposes only, since you can style the table however you want):
+Cookies Needed By Location Each Day
+6:00am	7:00am	8:00am	9:00am	10:00am	11:00am	12:00pm	1:00pm	2:00pm	3:00pm	4:00pm	5:00pm	6:00pm	7:00pm	Daily Location Total
+1st and Pike															
+SeaTac Airport															
+Seattle Center															
+Capitol Hill															
+Alki															
+Totals															
+User Stories (MVP)
+As a developer, I want to implement a constructor function, so that I can reuse code and eliminate much of the duplication in my JavaScript
+As a user, I want cookie sales data represented in tables rather than lists
+Technical Requirements
+Good use of a constructor function; style and syntax are correctly implemented
+Each cookie stand location should have a separate render() method that creates and appends its row to the table
+The header row and footer row are each created in their own stand-alone function
+Duplicate code has been removed and DRY principles are evident
+Working on a non-master branch for the day, with regular commit history. Basically, every time you get something to work, you should do a commit. But you only need to push every couple of hours or so, tops.
+User Stories (Stretch... NOT REQUIRED)
+As a developer, I will continue to work on design aspects of the public-facing page.
+As a developer, to facilitate design work, I will build a style guide.
+As a developer, to demonstrate to my client my ability to add value, I will create a second table that will help Pat manage staffing. Using the basic rubric that single Salmon Cookie Tosser can serve 20 customers per hour, and that each location should have a minimum of two Salmon Cookie Tossers on shift at all times, calculate how many Salmon Cookie Tossers are needed at each location each hour.
+
+==========================
+lab 8
+==============================
+Assignment Overview: Lab 8
+Today you will be adding a form to your existing cookie stand project so that you can add new locations to the table by simply inputting their information with the form.
+
+Also, Pat has decided that he would like a footer row after all.
+
+Instructions
+Here's some of the steps you'll need to take, but not necessarily in this order:
+
+Add the necessary HTML to create the input form.
+Don't forget <fieldset>!
+Use the constructor function as your guide to determine what input fields your form needs (hint: also consider what is passed in when creating instances!)
+Your JS will need an event listener and and event handler, and you may also want a variable to facilitate DOM access to the form.
+As we saw in class, the event handler should use the take the data from the input field, pass it into the constructor function, and create a new instance of a cookie stand that then appends to the table.
+Are you going to do any error correction on input? You probably should. Look at what kind of input validation is built in to HTML5.
+Write a stand-alone function to generate a footer row which will display the total number of cookies sold per hour for all locations. When a new store is added using your form, the totals in the footer row should update to include these new sales numbers.
+Build incrementally. Test frequently.
+Be attentive to overall code structure.
+This is a good point to refactor your code into smaller functions/methods if you have some huge functions going on. Remember that each function should do one thing, and then you can compose more complex behavior out of functions.
+Anywhere you have repeated chunks of code, maybe you can start to apply some DRY principles. Generally, once some chunk of code is appearing for a 3rd time or so, that's when you want to consider refactoring.
+When making code more DRY, look for repeated behaviors that act on different pieces of data. Put the behavior into a function that is declared with parameters to receive the unique data, and then replace the repeated code with the function called with the unique data in arguments.
+Submit your assignment through Canvas as usual.
