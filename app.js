@@ -12,28 +12,29 @@ function Store(name, minCust, maxCust, aveCookies) {
   this.aveCookiesPerCustPerSale = aveCookies;
   this.cookiesSoldEachHr = [];
   this.objTotalCookiesSaleForDayVari = 0;
-};
+}
 
 //adding methods for object constructor function
 //random function we built in class
 //calcs random customer per hour AND mults it against ave cookies so we  get random cookie sales per hr
-Store.prototype.CalcCookiesSalePerHr = function () {
+Store.prototype.calcCookiesSalePerHr = function () {
   var randAmt = Math.floor(Math.random() * (this.maxCustPerHour - this.minCustPerHr + 1) + this.minCustPerHr);
   return Math.round(randAmt * this.aveCookiesPerCustPerSale);
-}
+};
 //builds an array of the cookies sold each hour
 Store.prototype.buildCookiesSoldEachHrArray = function() {
   for (var k = 0; k < 15; k++) {
-    var tempCalcCookiesPerHr = this.CalcCookiesSalePerHr();
+    var tempCalcCookiesPerHr = this.calcCookiesSalePerHr();
     this.cookiesSoldEachHr.push(tempCalcCookiesPerHr);
     this.objTotalCookiesSaleForDayVari = this.objTotalCookiesSaleForDayVari + tempCalcCookiesPerHr;
   }
 };
 
 //rendering back to site
+//this is no longer relevant
 Store.prototype.rendersHours = function() {
   //ref a section in the HTML
-  this.CalcCookiesSalePerHr();
+  this.calcCookiesSalePerHr();
   var storesContainer = document.getElementById('stores');
   var headerElement = document.createElement('h2');
   headerElement.textContent= this.name;
@@ -44,7 +45,7 @@ Store.prototype.rendersHours = function() {
 
   for (var y = 0; y < this.cookiesSoldEachHr.length; y++) { 
     var listItemEl = document.createElement('li');
-    
+
     if ((y+6) < 12) {
       listItemEl.textContent = ((y+6) + 'am: ' + this.cookiesSoldEachHr[y] + ' cookies');
     } else if (y+6 === 12) {
@@ -54,7 +55,7 @@ Store.prototype.rendersHours = function() {
     }
     ulEl.appendChild(listItemEl);
   }
-  
+
   listItemEltotal.textContent = ('Total: ' + this.objTotalCookiesSaleForDayVari + ' cookies');
   ulEl.appendChild(listItemEltotal);
 
@@ -67,17 +68,20 @@ Store.prototype.rendersHours = function() {
 Store.prototype.rendersTableHeader = function() {
   var tableHeaderEl = document.getElementById('tablehead');
   var trEl = document.createElement('tr');
-   
-  for (var m = 0; m < this.cookiesSoldEachHr.length; m++) {
-    var thEl = document.createElement('th'); 
-    if ((m+6) < 12) {
+
+  for (var m = -1; m < this.cookiesSoldEachHr.length; m++) {
+    var thEl = document.createElement('th');
+    if (m < 0) {
+      thEl.textContent = ('Store Name: ');
+    } else if ((m+6) < 12) {
       thEl.textContent = ((m+6) + ':00 am');
     } else if (m+6 === 12) {
       thEl.textContent = ((m+6) + ':00 pm');
-    } else {
+    } else if ((m+6) < 20) {
       thEl.textContent = ((m+6-12) + ':00 pm');
+    } else {
+      thEl.textContent = 'Total';
     }
-    //console.log(thEl);
     trEl.appendChild(thEl);
   }
   tableHeaderEl.appendChild(trEl);
@@ -88,17 +92,20 @@ Store.prototype.rendersTableRows = function() {
   var tableRowEl = document.getElementById('tabledetails');
   var trEl = document.createElement('tr');
   var thEl = document.createElement('th');
+
   trEl.appendChild(thEl); 
-  for (var r = 0; r < this.cookiesSoldEachHr.length; r++) {
-    thEl.textContent = this.name;
-    var tdEl = document.createElement('td'); 
-    tdEl.textContent = (this.cookiesSoldEachHr[r]);
+  for (var r = 0; r < (this.cookiesSoldEachHr.length + 1); r++) {
+    if (r < this.cookiesSoldEachHr.length) {
+      thEl.textContent = this.name;
+      var tdEl = document.createElement('td');
+      tdEl.textContent = (this.cookiesSoldEachHr[r]);
+    } else {
+      tdEl.textContent = this.objTotalCookiesSaleForDayVari;
+    }
     trEl.appendChild(tdEl);
   }
-  
   tableRowEl.appendChild(trEl);
 };
-
 
 
 //creating objects
@@ -115,7 +122,7 @@ var storeArray = [pikeAndFirstStore, seaTacStore, seattleCenterStore, capitolHil
 
 //then run code for each store to build rows
 for (var i = 0; i < storeArray.length; i++) {
-  storeArray[i].CalcCookiesSalePerHr();
+  storeArray[i].calcCookiesSalePerHr();
   storeArray[i].buildCookiesSoldEachHrArray();
   //storeArray[i].rendersHours(); //we are no longer rendering this way, we are rendering by table
   storeArray[i].rendersTableRows();
