@@ -38,19 +38,39 @@ nav li {
   margin-left: 20px;
 }
 
-a {
+li a {
   text-decoration: none;
   color: rgb(185, 185, 0);
 }
 
-ul li ul li {
+.addressAndHours {
   text-decoration: none;
+  text-decoration-style: none;
+  list-style-type: none;
 }
 
-#aboutHead {
+/* #aboutHead {
   font-family: 'Roboto Condensed', sans-serif;
+  color: rgb(109, 35, 5);
 }
 
+#idhead {
+  font-family: 'Rokkitt', serif;
+  color: rgb(109, 35, 5);
+}
 
+#salesHead {
+  color: rgb(109, 35, 5) 
+} */
+
+h1 {
+  font-family: 'Rokkitt', serif;
+  color: rgb(109, 35, 5);
+}
+
+h3 {
+  font-family: 'Roboto Condensed', sans-serif;
+  color: rgb(11, 100, 3);
+}
 
 
