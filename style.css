@@ -76,3 +76,14 @@ ul li {
 #aboutparagraph {
   width: 960px;
 }
+
+ul li img {
+  width: 150px;
+  Height: 150px;
+
+}
+
+#orderimges {
+  width: 150px;
+  Height: 150px;
+}
