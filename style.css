@@ -1,4 +1,3 @@
-/*why doesn't it line up even though i made all the widths the same*/
 th {
   border-width: 1px;
   border-style: solid;
@@ -26,4 +25,32 @@ table {
   column-width: 150px;
   background-color: rgb(80, 38, 21);
 }
+
+nav {
+  float: right;
+}
+
+nav li {
+  display: inline-block;
+  font-family: 'Indie Flower', cursive;
+  font-size: 22px;
+  Font-weight: bold;
+  margin-left: 20px;
+}
+
+a {
+  text-decoration: none;
+  color: rgb(185, 185, 0);
+}
+
+ul li ul li {
+  text-decoration: none;
+}
+
+#aboutHead {
+  font-family: 'Roboto Condensed', sans-serif;
+}
+
+
+
 
