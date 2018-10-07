@@ -1,3 +1,4 @@
+/*table cell formats, like lines*/
 th {
   border-width: 1px;
   border-style: solid;
@@ -6,30 +7,37 @@ th {
 }
 
 html{
-  background: rgb(231, 101, 61);
+  background: rgb(15, 15, 15);
+  color: rgb(247, 240, 240);
 }
 
 form {
-  background: rgb(209, 169, 39);
+  background: rgb(160, 125, 9);
   width: 50%;
 }
+
+/*data in table*/
 td {
   border-style: dotted;
   border-width: 1px;
   width: 200px;
-  background-color: rgb(177, 77, 31);
+  background-color: rgb(179, 69, 19);
 }
 
+/*table header*/
 table {
+  width: 960px;
   table-layout: auto;
   column-width: 150px;
-  background-color: rgb(80, 38, 21);
+  background-color: rgb(75, 32, 15);
 }
 
+/*links between the pages*/
 nav {
   float: right;
 }
 
+/*links between the pages*/
 nav li {
   display: inline-block;
   font-family: 'Indie Flower', cursive;
@@ -38,34 +46,21 @@ nav li {
   margin-left: 20px;
 }
 
+/*links between the pages*/
 li a {
   text-decoration: none;
   color: rgb(185, 185, 0);
 }
 
+/*to remove the bullets for the address and hours*/
 .addressAndHours {
-  text-decoration: none;
-  text-decoration-style: none;
+  width: 200px;
   list-style-type: none;
 }
 
-/* #aboutHead {
-  font-family: 'Roboto Condensed', sans-serif;
-  color: rgb(109, 35, 5);
-}
-
-#idhead {
-  font-family: 'Rokkitt', serif;
-  color: rgb(109, 35, 5);
-}
-
-#salesHead {
-  color: rgb(109, 35, 5) 
-} */
-
 h1 {
   font-family: 'Rokkitt', serif;
-  color: rgb(109, 35, 5);
+  color: salmon;
 }
 
 h3 {
@@ -73,4 +68,11 @@ h3 {
   color: rgb(11, 100, 3);
 }
 
+ul li {
+  display: inline-block;
+  margin-right: 20px;
+}
 
+#aboutparagraph {
+  width: 960px;
+}
